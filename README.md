@@ -1,6 +1,6 @@
 # Kuwait Salary Calculator
 
-A web-based salary calculator for Kuwait workforce support (WFS- دعم العمالة) calculations. This tool helps calculate net salary after deductions based on various factors including marital status, degree type, and number of children.
+A web-based salary calculator for Kuwait workforce support (WFS- دعم العمالة) calculations. This tool helps calculate net salary after deductions(قص التأمينات) based on various factors including marital status, degree type, and number of children.
 
 ## Features
 
