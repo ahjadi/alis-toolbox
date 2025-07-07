@@ -127,9 +127,9 @@ class WorkforceSupport extends BaseSalary {
         const amountDeducted = totalSalary - totalSalaryAfterTax;
 
         return {
-            totalSalary: totalSalary.toFixed(2),
-            salaryAfterDeduction: totalSalaryAfterTax.toFixed(2),
-            amountDeducted: amountDeducted.toFixed(2)
+            totalSalary: totalSalary.toFixed(3),
+            salaryAfterDeduction: totalSalaryAfterTax.toFixed(3),
+            amountDeducted: amountDeducted.toFixed(3)
         };
     }
 }
@@ -212,7 +212,7 @@ function calculateAdvancedSalary() {
             <pre>Total Salary: KWD ${summary.totalSalary}
 Salary After Deduction: KWD ${summary.salaryAfterDeduction}
 Amount deducted: KWD ${summary.amountDeducted}</pre>
-            <pre>Final Total Salary: KWD ${finalSalary.toFixed(2)}</pre>
+            <pre>Final Total Salary: KWD ${finalSalary.toFixed(3)}</pre>
         `;
         outputDiv.style.display = 'block';
 
