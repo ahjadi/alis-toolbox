@@ -37,7 +37,7 @@ The calculator considers the following factors:
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/ahjadi/salary-calculator.git
+   git clone https://github.com/ahjadi/priv-salary.git
    ```
 
 2. Open `index.html` in your web browser to use the basic calculator
