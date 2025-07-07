@@ -59,11 +59,11 @@ class BaseSalary {
     }
 
     calculateTax(taxRate = 10.5) {
-        return Math.round(this.baseSalary * (taxRate / 100) * 100) / 100;
+        return Math.round(this.baseSalary * (taxRate / 100) * 1000) / 1000;
     }
 
     calculateBaseSalaryTaxed(taxRate = 10.5) {
-        return Math.round((this.baseSalary - this.calculateTax(taxRate)) * 100) / 100;
+        return Math.round((this.baseSalary - this.calculateTax(taxRate)) * 1000) / 1000;
     }
 }
 
@@ -104,13 +104,13 @@ class WorkforceSupport extends BaseSalary {
     }
 
     calculateWfsTaxed(taxRate = 10.5) {
-        return Math.round((this.calculateTotalWFSAllowance() - (this.calculateTotalTaxableAllowance() * (taxRate / 100))) * 100) / 100;
+        return Math.round((this.calculateTotalWFSAllowance() - (this.calculateTotalTaxableAllowance() * (taxRate / 100))) * 1000) / 1000;
     }
 
     calculateTax(taxRate = 10.5) {
         const workforceTax = this.calculateTotalTaxableAllowance() * (taxRate / 100);
         const baseTax = super.calculateTax(taxRate);
-        return Math.round((workforceTax + baseTax) * 100) / 100;
+        return Math.round((workforceTax + baseTax) * 1000) / 1000;
     }
 
     calculateTotalSalaryBeforeTax() {
@@ -118,7 +118,7 @@ class WorkforceSupport extends BaseSalary {
     }
 
     calculateTotalSalaryAfterTax(taxRate = 10.5) {
-        return Math.round((this.calculateTotalSalaryBeforeTax() - this.calculateTax(taxRate)) * 100) / 100;
+        return Math.round((this.calculateTotalSalaryBeforeTax() - this.calculateTax(taxRate)) * 1000) / 1000;
     }
 
     getSalarySummary(taxRate = 10.5) {
