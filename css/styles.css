@@ -391,3 +391,8 @@ pre {
     margin-bottom: 1rem;
     font-weight: regular;
 }
+
+.salary-highlight {
+    font-size: 1rem;
+    color: #263667;
+}

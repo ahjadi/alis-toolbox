@@ -157,12 +157,14 @@ function calculateBasicSalary() {
             document.querySelector('form').insertAdjacentElement('afterend', outputDiv);
         }
 
-        outputDiv.innerHTML = `
-            <h2>Salary Summary</h2>
-            <pre>Total Salary: KWD ${summary.totalSalary}
-Salary After Deduction: KWD ${summary.salaryAfterDeduction}
-Amount deducted: KWD ${summary.amountDeducted}</pre>
-        `;
+outputDiv.innerHTML = `
+    <h2>Salary Summary</h2>
+    <div style="margin-top: 1em;">
+        <p>Total Salary:<br><strong>KWD ${summary.totalSalary}</strong></p>
+        <p class="salary-highlight">Salary After Deduction: <br><strong>KWD ${summary.salaryAfterDeduction}</strong></p>
+        <p>Amount Deducted:<br><strong>KWD ${summary.amountDeducted}</strong></p>
+    </div>
+`;
         outputDiv.style.display = 'block';
 
     } catch (error) {
@@ -208,12 +210,14 @@ function calculateAdvancedSalary() {
         }
 
         outputDiv.innerHTML = `
-            <h2>Salary Summary</h2>
-            <pre>Total Salary: KWD ${summary.totalSalary}
-Salary After Deduction: KWD ${summary.salaryAfterDeduction}
-Amount deducted: KWD ${summary.amountDeducted}</pre>
-            <pre>Final Total Salary: KWD ${finalSalary.toFixed(3)}</pre>
-        `;
+    <h2>Salary Summary</h2>
+    <div>
+        <p>Total Salary:<br><strong>KWD ${summary.totalSalary}</strong></p>
+        <p class="salary-highlight">Salary After Deduction: <br><strong>KWD ${summary.salaryAfterDeduction}</strong></p>
+        <p>Amount Deducted:<br><strong>KWD ${summary.amountDeducted}</strong></p>
+        <p class="salary-highlight">Final Total Salary: <br><strong>KWD ${finalSalary.toFixed(3)}</strong></p>
+    </div>
+`;
         outputDiv.style.display = 'block';
 
     } catch (error) {
