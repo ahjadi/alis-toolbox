@@ -14,7 +14,7 @@ A web-based salary calculator for Kuwait workforce support (WFS) calculations. T
 
 ## Live Demo
 
-[Visit the calculator](https://ahjadi.github.io/salary-calculator/)
+[Visit the calculator](https://ahjadi.github.io/priv-salary/)
 
 ## Calculations Included
 
