@@ -127,7 +127,7 @@ class WorkforceSupport extends BaseSalary {
         const amountDeducted = totalSalary - totalSalaryAfterTax;
 
         return {
-            totalSalary: totalSalary.toFixed(3),
+            totalSalary: totalSalary.toFixed(2),
             salaryAfterDeduction: totalSalaryAfterTax.toFixed(2),
             amountDeducted: amountDeducted.toFixed(2)
         };
@@ -149,19 +149,31 @@ function calculateBasicSalary() {
         const workforceSupport = new WorkforceSupport(baseSalary, maritalStatus, degreeType, numChildren);
         const summary = workforceSupport.getSalarySummary();
 
-        const resultDiv = document.getElementById('result');
-        resultDiv.innerHTML = `
-            <h3>Calculation Results:</h3>
-            <p><strong>Total Salary:</strong> KWD ${summary.totalSalary}</p>
-            <p><strong>Salary After Deduction:</strong> KWD ${summary.salaryAfterDeduction}</p>
-            <p><strong>Amount deducted:</strong> KWD ${summary.amountDeducted}</p>
+        // Find or create output div
+        let outputDiv = document.querySelector('.output');
+        if (!outputDiv) {
+            outputDiv = document.createElement('div');
+            outputDiv.className = 'output';
+            document.querySelector('form').insertAdjacentElement('afterend', outputDiv);
+        }
+
+        outputDiv.innerHTML = `
+            <h2>Salary Summary</h2>
+            <pre>Total Salary: KWD ${summary.totalSalary}
+Salary After Deduction: KWD ${summary.salaryAfterDeduction}
+Amount deducted: KWD ${summary.amountDeducted}</pre>
         `;
-        resultDiv.style.display = 'block';
+        outputDiv.style.display = 'block';
 
     } catch (error) {
-        const resultDiv = document.getElementById('result');
-        resultDiv.innerHTML = `<p class="error">Error: ${error.message}</p>`;
-        resultDiv.style.display = 'block';
+        let outputDiv = document.querySelector('.output');
+        if (!outputDiv) {
+            outputDiv = document.createElement('div');
+            outputDiv.className = 'output';
+            document.querySelector('form').insertAdjacentElement('afterend', outputDiv);
+        }
+        outputDiv.innerHTML = `<p class="error">Error: ${error.message}</p>`;
+        outputDiv.style.display = 'block';
     }
 }
 
@@ -187,26 +199,68 @@ function calculateAdvancedSalary() {
         const baseNetSalary = parseFloat(summary.salaryAfterDeduction);
         const finalSalary = baseNetSalary + salaryAddition - salaryRemoval + housingCompensation;
 
-        const resultDiv = document.getElementById('result');
-        resultDiv.innerHTML = `
-            <h3>Calculation Results:</h3>
-            <p><strong>Total Salary:</strong> KWD ${summary.totalSalary}</p>
-            <p><strong>Salary After Deduction:</strong> KWD ${summary.salaryAfterDeduction}</p>
-            <p><strong>Amount deducted:</strong> KWD ${summary.amountDeducted}</p>
-            <hr>
-            <p><strong>Final Net Salary (with adjustments):</strong> KWD ${finalSalary.toFixed(3)}</p>
+        // Find or create output div
+        let outputDiv = document.querySelector('.output');
+        if (!outputDiv) {
+            outputDiv = document.createElement('div');
+            outputDiv.className = 'output';
+            document.querySelector('form').insertAdjacentElement('afterend', outputDiv);
+        }
+
+        outputDiv.innerHTML = `
+            <h2>Salary Summary</h2>
+            <pre>Total Salary: KWD ${summary.totalSalary}
+Salary After Deduction: KWD ${summary.salaryAfterDeduction}
+Amount deducted: KWD ${summary.amountDeducted}</pre>
+            <pre>Final Total Salary: KWD ${finalSalary.toFixed(2)}</pre>
         `;
-        resultDiv.style.display = 'block';
+        outputDiv.style.display = 'block';
 
     } catch (error) {
-        const resultDiv = document.getElementById('result');
-        resultDiv.innerHTML = `<p class="error">Error: ${error.message}</p>`;
-        resultDiv.style.display = 'block';
+        let outputDiv = document.querySelector('.output');
+        if (!outputDiv) {
+            outputDiv = document.createElement('div');
+            outputDiv.className = 'output';
+            document.querySelector('form').insertAdjacentElement('afterend', outputDiv);
+        }
+        outputDiv.innerHTML = `<p class="error">Error: ${error.message}</p>`;
+        outputDiv.style.display = 'block';
     }
 }
 
 // Initialize form when DOM is loaded
 document.addEventListener('DOMContentLoaded', function() {
+    // Initialize marital status toggle
+    const maritalToggle = document.getElementById('marital_status_toggle');
+    if (maritalToggle) {
+        maritalToggle.addEventListener('change', function() {
+            const maritalStatusInput = document.getElementById('marital_status');
+            maritalStatusInput.value = this.checked ? 'MARRIED' : 'SINGLE';
+        });
+    }
+
+    // Initialize children buttons
+    const childButtons = document.querySelectorAll('.child-button');
+    childButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            // Remove 'selected' class from all buttons
+            childButtons.forEach(btn => btn.classList.remove('selected'));
+            
+            // Add 'selected' class to clicked button
+            this.classList.add('selected');
+            
+            // Update hidden input value
+            const numChildren = this.getAttribute('data-value');
+            document.getElementById('num_children').value = numChildren;
+        });
+    });
+
+    // Set default selected button (0 children)
+    const defaultButton = document.querySelector('.child-button[data-value="0"]');
+    if (defaultButton) {
+        defaultButton.classList.add('selected');
+    }
+
     // Add event listener to form if it exists
     const basicForm = document.getElementById('salaryForm');
     const advancedForm = document.getElementById('advancedSalaryForm');

@@ -5,30 +5,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Salary Calculator</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-    <!-- <link rel="stylesheet" href="{{ url_for('static', filename='normalize.css') }}"> -->
+    <link rel="stylesheet" href="css/styles.css">
+    <!-- <link rel="stylesheet" href="css/normalize.css"> -->
     <!-- Add favicon -->
-    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
+    <link rel="icon" href="css/favicon.ico" type="image/x-icon">
     <!-- Add Apple touch icons -->
-    <link rel="apple-touch-icon" href="{{ url_for('static', filename='apple-icon.png') }}">
-    <link rel="apple-touch-icon-precomposed" href="{{ url_for('static', filename='apple-icon-precomposed.png') }}">
-    <link rel="preload" href="/static/fonts/Dubai-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
-    <link rel="preload" href="/static/fonts/Dubai-Bold.woff2" as="font" type="font/woff2" crossorigin="anonymous">
-    <link rel="preload" href="/static/fonts/Dubai-Light.woff2" as="font" type="font/woff2" crossorigin="anonymous">
-    <link rel="preload" href="/static/fonts/Dubai-Medium.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+    <link rel="apple-touch-icon" href="css/apple-icon.png">
+    <link rel="apple-touch-icon-precomposed" href="css/apple-icon-precomposed.png">
+    <link rel="preload" href="css/fonts/Dubai-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+    <link rel="preload" href="css/fonts/Dubai-Bold.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+    <link rel="preload" href="css/fonts/Dubai-Light.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+    <link rel="preload" href="css/fonts/Dubai-Medium.woff2" as="font" type="font/woff2" crossorigin="anonymous">
 </head>
 
 <body>
     <nav>
         <ul>
-            <li><a href="{{ url_for('index') }}" class="{{ 'active' if request.endpoint == 'index' else '' }}">Salary Calculator</a></li>
-            <li><a href="{{ url_for('advancedCalculator') }}" class="{{ 'active' if request.endpoint == 'advancedCalculator' else '' }}">Advanced</a></li>
-            <!-- Add more links here as needed -->
+            <li><a href="index.html" class="active">Salary Calculator</a></li>
+            <li><a href="advanced.html">Advanced</a></li>
         </ul>
     </nav>
     <div class="container">
         <h1>Salary Calculator</h1>
-        <form method="POST" action="/">
+        <form id="salaryForm">
             <label for="base_salary">Base Salary (KWD):</label>
             <input type="number" id="base_salary" name="base_salary" step="0.01" required>
             <!-- <div class="hint">Enter your base salary in Kuwaiti Dinar (KWD).</div> -->
@@ -44,7 +43,6 @@
             </div>
             <input type="hidden" id="marital_status" name="marital_status" value="SINGLE">
             <!-- <div class="hint">Select your marital status.</div> -->
-
 
             <label for="degree_type">Degree Type:</label>
             <select id="degree_type" name="degree_type" required>
@@ -74,41 +72,12 @@
             <button type="submit">Calculate</button>
         </form>
 
-        {% if summary %}
-        <div class="output">
-            <h2>Salary Summary</h2>
-            <pre>{{ summary }}</pre>
+        <!-- Output will be inserted here by JavaScript -->
 
-        </div>
-        {% endif %}
-        <p><a href="{{ url_for('advancedCalculator') }}" target="_blank" rel="noopener noreferrer">Go to Advanced Calculator</a></p>
+        <p><a href="advanced.html" target="_blank" rel="noopener noreferrer">Go to Advanced Calculator</a></p>
     </div>
 
-    <script>
-        // Marital Status Toggle
-        document.getElementById("marital_status_toggle").addEventListener("change", function () {
-            const maritalStatusInput = document.getElementById("marital_status");
-            maritalStatusInput.value = this.checked ? "MARRIED" : "SINGLE";
-        });
-
-        // Number of Children Buttons
-        document.querySelectorAll('.child-button').forEach(button => {
-            button.addEventListener('click', function () {
-                // Remove 'selected' class from all buttons
-                document.querySelectorAll('.child-button').forEach(btn => btn.classList.remove('selected'));
-
-                // Add 'selected' class to the clicked button
-                this.classList.add('selected');
-
-                // Update the hidden input value
-                const numChildren = this.getAttribute('data-value');
-                document.getElementById('num_children').value = numChildren;
-            });
-        });
-
-        // Set the default selected button (0)
-        document.querySelector('.child-button[data-value="0"]').classList.add('selected');
-    </script>
+    <script src="js/calculator.js"></script>
 </body>
 
 </html>
