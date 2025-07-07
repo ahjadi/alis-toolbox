@@ -1,0 +1,393 @@
+/* Load Dubai font locally */
+@font-face {
+    font-family: 'Dubai';
+    src: url('./fonts/Dubai-Regular.woff2') format('woff2'),
+        url('./fonts/Dubai-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+    /* Use swap to avoid invisible text */
+}
+
+@font-face {
+    font-family: 'Dubai';
+    src: url('./fonts/Dubai-Bold.woff2') format('woff2'),
+        url('./fonts/Dubai-Bold.woff') format('woff');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+    /* Use swap to avoid invisible text */
+}
+
+@font-face {
+    font-family: 'Dubai';
+    src: url('./fonts/Dubai-Light.woff2') format('woff2'),
+        url('./fonts/Dubai-Light.woff') format('woff');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+    /* Use swap to avoid invisible text */
+}
+
+@font-face {
+    font-family: 'Dubai';
+    src: url('./fonts/Dubai-Medium.woff2') format('woff2'),
+        url('./fonts/Dubai-Medium.woff') format('woff');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+    /* Use swap to avoid invisible text */
+}
+
+/* Global font settings */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+/* Navigation Menu Styles */
+nav {
+    background-color: #263667;
+    /* Dark blue background */
+    padding: 1rem;
+    position: fixed;
+    /* Fix the menu at the top */
+    top: 0;
+    left: 0;
+    width: 100%;
+    /* Full width */
+    z-index: 1000;
+    /* Ensure the menu stays above other content */
+}
+
+nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    /* Center the menu items */
+    gap: 1rem;
+    /* Space between menu items */
+    flex-wrap: wrap;
+    /* Allow items to wrap on smaller screens */
+}
+
+nav ul li {
+    display: inline;
+}
+
+nav ul li a {
+    color: #ffffff;
+    /* White text */
+    text-decoration: none;
+    font-weight: bold;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+nav ul li a:hover {
+    background-color: #1c2a4f;
+    /* Darker blue on hover */
+}
+
+/* Active link styling */
+nav ul li a.active {
+    background-color: #9c2427;
+    /* Red background for active link */
+}
+
+/* General Styles */
+body {
+    font-family: 'Dubai', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    background-color: #f1f1f1;
+    color: #838588;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.container {
+    background-color: #ffffff;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 500px;
+    margin: 6rem auto 2rem;
+    /* Add top margin to avoid overlapping with the menu */
+}
+
+h1 {
+    font-family: 'Dubai', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    color: #263667;
+    text-align: center;
+    margin-bottom: 1.5rem;
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+h2 {
+    font-family: 'Dubai', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    color: #838588;
+    text-align: center;
+    margin-bottom: 1.5rem;
+    font-size: 2rem;
+    font-weight: 500;
+}
+
+
+/* For calculator 2 */
+p {
+    font-size: 1rem;
+    color: #838588;
+}
+
+a {
+    color: #263667;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+
+/* Form Styles */
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    font-family: 'Dubai', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    /* Add space below the label */
+    color: #263667;
+    display: block;
+    /* Ensure label is on its own line */
+}
+
+input,
+select {
+    font-family: 'Dubai', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    padding: 0.75rem;
+    /* Adjust padding */
+    margin-bottom: 1rem;
+    /* Add space below the input */
+    border: 1px solid #838588;
+    border-radius: 5px;
+    font-size: 1rem;
+    outline: none;
+    color: #263667;
+    width: 100%;
+    /* Ensure inputs take full width */
+}
+
+input:focus,
+select:focus {
+    border-color: #9c2427;
+    box-shadow: 0 0 5px rgba(156, 36, 39, 0.5);
+}
+
+/* Toggle Switch Styles */
+.switch-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 1rem;
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 28px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: 0.4s;
+    border-radius: 28px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 20px;
+    width: 20px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: 0.4s;
+    border-radius: 50%;
+}
+
+input:checked+.slider {
+    background-color: #263667;
+}
+
+input:checked+.slider:before {
+    transform: translateX(22px);
+}
+
+/* Button Styles */
+button {
+    font-family: 'Dubai', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    background-color: #263667;
+    color: #ffffff;
+    padding: 1rem;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #1c2a4f;
+}
+
+/* Output Styles */
+.output {
+    margin-top: 2rem;
+    padding: 1.5rem;
+    background-color: #f1f1f1;
+    border-radius: 5px;
+    border: 2px solid #888383;
+}
+
+pre {
+    font-family: 'Dubai', 'Courier New', monospace;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    color: #263667;
+    margin: 0;
+    font-size: 1.2rem;
+    font-weight: 500;
+    text-align: center;
+}
+
+
+/* Responsive Design for Mobile */
+@media screen and (max-width: 768px) {
+    .container {
+        max-width: 90%;
+        /* Allow container to be fluid */
+        margin-top: 4rem;
+        /* Adjust margin */
+    }
+
+    .children-buttons {
+        flex-wrap: wrap;
+        /* Allow buttons to wrap on smaller screens */
+    }
+
+    .child-button {
+        flex: 1 1 45%;
+        /* Allow buttons to take up half the width */
+        padding: 1rem;
+    }
+}
+
+/* Children Buttons Styles */
+.children-buttons {
+    display: flex;
+    gap: 5px;
+    margin-bottom: 1rem;
+}
+
+.child-button {
+    flex: 1;
+    padding: 0.5rem;
+    border: none;
+    border-radius: 5px;
+    background-color: #e0e0e0;
+    /* Light gray by default */
+    color: #333;
+    font-family: 'Dubai', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.child-button:hover {
+    background-color: #d0d0d0;
+    /* Slightly darker on hover */
+    transform: translateY(-2px);
+}
+
+.child-button[data-value="0"] {
+    background-color: #f0f0f0;
+    /* Lightest color */
+}
+
+.child-button[data-value="1"] {
+    background-color: #e0e0e0;
+}
+
+.child-button[data-value="2"] {
+    background-color: #d0d0d0;
+}
+
+.child-button[data-value="3"] {
+    background-color: #c0c0c0;
+}
+
+.child-button[data-value="4"] {
+    background-color: #b0b0b0;
+}
+
+.child-button[data-value="5"] {
+    background-color: #a0a0a0;
+}
+
+.child-button[data-value="6"] {
+    background-color: #909090;
+}
+
+.child-button[data-value="7"] {
+    background-color: #808080;
+    /* Darkest color */
+    color: #fff;
+    /* White text for better contrast */
+}
+
+.child-button.selected {
+    background-color: #263667;
+    /* Blue color for selected button */
+    color: #fff;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Small Hints */
+.hint {
+    font-family: 'Dubai', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    color: #9c2427;
+    font-size: 0.875rem;
+    margin-top: -0.5rem;
+    margin-bottom: 1rem;
+    font-weight: regular;
+}
