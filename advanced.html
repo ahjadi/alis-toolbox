@@ -27,7 +27,7 @@
         <form id="advancedSalaryForm">
             <label for="base_salary">Base Salary (KWD):</label>
             <input type="number" id="base_salary" name="base_salary" step="0.01" required>
-            
+
             <label for="marital_status">Marital Status:</label>
             <div class="switch-container">
                 <span>Single</span>
@@ -48,6 +48,8 @@
                 <option value="HIGH_SCHOOL">High School</option>
                 <option value="MiddleSchool">Middle School</option>
             </select>
+            <div class="hint">Select your highest degree.</div>
+
 
             <label for="num_children">Number of Children:</label>
             <div class="children-buttons">
@@ -61,17 +63,17 @@
                 <button type="button" class="child-button" data-value="7">7+</button>
             </div>
             <input type="hidden" id="num_children" name="num_children" value="0">
-            <div class="hint">Select the number of children (max 7).</div>
+            <!-- <div class="hint">Select the number of children (max 7).</div> -->
 
             <label for="housing_compensation">Housing Compensation (KWD):</label>
-            <input type="number" id="housing_compensation" name="housing_compensation" step="0.01" value="0">
+            <input type="number" id="housing_compensation" name="housing_compensation" step="0.01">
 
             <label for="salary_addition">Add to Salary (KWD):</label>
-            <input type="number" id="salary_addition" name="salary_addition" step="0.01" value="0">
+            <input type="number" id="salary_addition" name="salary_addition" step="0.01">
 
             <label for="salary_removal">Remove from Salary (KWD):</label>
-            <input type="number" id="salary_removal" name="salary_removal" step="0.01" value="0">
-            
+            <input type="number" id="salary_removal" name="salary_removal" step="0.01">
+
             <button type="submit">Calculate</button>
         </form>
 
