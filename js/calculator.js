@@ -162,7 +162,7 @@ outputDiv.innerHTML = `
     <div style="margin-top: 1em;">
         <p>Total Salary:<br><strong>KWD ${summary.totalSalary}</strong></p>
         <p class="salary-highlight">Salary After Deduction: <br><strong>KWD ${summary.salaryAfterDeduction}</strong></p>
-        <p>Amount Deducted:<br><strong>KWD ${summary.amountDeducted}</strong></p>
+        <p>Amount Deducted:<br><strong>- KWD ${summary.amountDeducted}</strong></p>
     </div>
 `;
         outputDiv.style.display = 'block';
@@ -214,7 +214,7 @@ function calculateAdvancedSalary() {
     <div>
         <p>Total Salary:<br><strong>KWD ${summary.totalSalary}</strong></p>
         <p class="salary-highlight">Salary After Deduction: <br><strong>KWD ${summary.salaryAfterDeduction}</strong></p>
-        <p>Amount Deducted:<br><strong>KWD ${summary.amountDeducted}</strong></p>
+        <p>Amount Deducted:<br><strong>- KWD ${summary.amountDeducted}</strong></p>
         <p class="salary-highlight">Final Total Salary: <br><strong>KWD ${finalSalary.toFixed(3)}</strong></p>
     </div>
 `;
