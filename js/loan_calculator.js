@@ -200,6 +200,11 @@ function calculateAdvancedLoan() {
         const earlyPaymentScenario = loan.calculateEarlyPaymentScenario(extraPayment, lumpSum, lumpSumMonth);
         const strategies = loan.calculatePaymentStrategies();
 
+        // Find the best strategy
+        const bestStrategy = strategies.reduce((best, current) => 
+            current.interestSaved > best.interestSaved ? current : best
+        );
+
         // Find or create output div
         let outputDiv = document.querySelector('.advanced-loan-output');
         if (!outputDiv) {
@@ -208,46 +213,95 @@ function calculateAdvancedLoan() {
             document.querySelector('#advancedLoanForm').insertAdjacentElement('afterend', outputDiv);
         }
 
-        let strategyHTML = '';
+        // Generate strategy cards HTML
+        let strategyCardsHTML = '';
         strategies.forEach(strategy => {
-            strategyHTML += `
-                <tr>
-                    <td>${strategy.name}</td>
-                    <td>${strategy.totalMonths}</td>
-                    <td>KWD ${strategy.totalInterest.toFixed(3)}</td>
-                    <td>KWD ${strategy.interestSaved.toFixed(3)}</td>
-                    <td>${strategy.monthsSaved}</td>
-                </tr>
+            const isStandard = strategy.extra === 0 && strategy.lump === 0;
+            const isBest = strategy.name === bestStrategy.name && !isStandard;
+            
+            let cardClass = 'strategy-card';
+            if (isStandard) cardClass += ' standard';
+            if (isBest) cardClass += ' best-savings';
+
+            strategyCardsHTML += `
+                <div class="${cardClass}">
+                    <div class="strategy-header">
+                        <span>${strategy.name}</span>
+                        ${isStandard ? '<span class="strategy-badge" style="background: #666;">Current</span>' : ''}
+                        ${isBest ? '<span class="strategy-badge">Best Savings</span>' : ''}
+                    </div>
+                    <div class="strategy-metrics">
+                        <div class="metric">
+                            <span class="metric-label">Duration</span>
+                            <span class="metric-value">${strategy.totalMonths} months</span>
+                        </div>
+                        ${!isStandard ? `
+                            <div class="metric">
+                                <span class="metric-label">Interest Saved</span>
+                                <span class="metric-value highlight">KWD ${strategy.interestSaved.toFixed(3)}</span>
+                            </div>
+                        ` : `
+                            <div class="metric">
+                                <span class="metric-label">Total Interest</span>
+                                <span class="metric-value">KWD ${strategy.totalInterest.toFixed(3)}</span>
+                            </div>
+                        `}
+                        ${!isStandard ? `
+                            <div class="metric">
+                                <span class="metric-label">Time Saved</span>
+                                <span class="metric-value highlight">${strategy.monthsSaved} months</span>
+                            </div>
+                        ` : ''}
+                        ${strategy.extra > 0 ? `
+                            <div class="metric full-width">
+                                <span class="metric-label">Monthly Payment</span>
+                                <span class="metric-value">KWD ${parseFloat(baseSummary.monthlyPayment).toFixed(3)} + ${strategy.extra} = <strong>KWD ${(parseFloat(baseSummary.monthlyPayment) + strategy.extra).toFixed(3)}</strong></span>
+                            </div>
+                        ` : ''}
+                        ${strategy.lump > 0 ? `
+                            <div class="metric full-width">
+                                <span class="metric-label">One-time Payment</span>
+                                <span class="metric-value">KWD ${strategy.lump.toFixed(3)}</span>
+                            </div>
+                        ` : ''}
+                    </div>
+                </div>
             `;
         });
+
+        // Create monthly payment display for current scenario
+        let monthlyPaymentDisplay = '';
+        if (extraPayment > 0) {
+            monthlyPaymentDisplay = `<p>Monthly Payment:<br><strong>KWD ${baseSummary.monthlyPayment} + ${extraPayment.toFixed(3)} = KWD ${(parseFloat(baseSummary.monthlyPayment) + extraPayment).toFixed(3)}</strong></p>`;
+        } else {
+            monthlyPaymentDisplay = `<p>Monthly Payment:<br><strong>KWD ${baseSummary.monthlyPayment}</strong></p>`;
+        }
 
         outputDiv.innerHTML = `
             <h2>Advanced Loan Analysis</h2>
             
             <h3>Current Scenario</h3>
             <div style="margin-top: 1em;">
-                <p>Monthly Payment:<br><strong>KWD ${baseSummary.monthlyPayment}</strong></p>
+                ${monthlyPaymentDisplay}
                 <p>Loan Term:<br><strong>${earlyPaymentScenario.totalMonths} months</strong></p>
                 <p class="salary-highlight">Total Interest:<br><strong>KWD ${earlyPaymentScenario.totalInterest.toFixed(3)}</strong></p>
                 <p>Months Saved:<br><strong>${earlyPaymentScenario.monthsSaved} months</strong></p>
+                ${lumpSum > 0 ? `<p>Lump Sum Payment:<br><strong>KWD ${lumpSum.toFixed(3)} at month ${lumpSumMonth}</strong></p>` : ''}
             </div>
 
             <h3>Payment Strategy Comparison</h3>
-            <div style="overflow-x: auto; margin-top: 1em;">
-                <table style="width: 100%; border-collapse: collapse; font-size: 0.9em;">
-                    <thead>
-                        <tr style="background-color: #f5f5f5;">
-                            <th style="padding: 8px; border: 1px solid #ddd; text-align: left;">Strategy</th>
-                            <th style="padding: 8px; border: 1px solid #ddd; text-align: center;">Months</th>
-                            <th style="padding: 8px; border: 1px solid #ddd; text-align: center;">Total Interest</th>
-                            <th style="padding: 8px; border: 1px solid #ddd; text-align: center;">Interest Saved</th>
-                            <th style="padding: 8px; border: 1px solid #ddd; text-align: center;">Months Saved</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        ${strategyHTML}
-                    </tbody>
-                </table>
+            
+            <!-- Quick Summary -->
+            ${bestStrategy.interestSaved > 0 ? `
+                <div class="comparison-summary">
+                    <h4>Best Strategy: ${bestStrategy.name}</h4>
+                    <p>Save KWD ${bestStrategy.interestSaved.toFixed(3)} in interest and pay off ${bestStrategy.monthsSaved} months early!</p>
+                </div>
+            ` : ''}
+
+            <!-- Strategy Cards -->
+            <div class="strategy-container">
+                ${strategyCardsHTML}
             </div>
         `;
         outputDiv.style.display = 'block';
