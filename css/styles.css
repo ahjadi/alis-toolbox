@@ -14,28 +14,28 @@
     --text-light: #666;
     --border-color: #e0e0e0;
     --border-dark: #888383;
-    
+
     /* Typography */
     --font-primary: 'Dubai', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-    
+
     /* Spacing */
     --spacing-xs: 0.25rem;
     --spacing-sm: 0.5rem;
     --spacing-md: 1rem;
     --spacing-lg: 1.5rem;
     --spacing-xl: 2rem;
-    
+
     /* Border Radius */
     --radius-sm: 5px;
     --radius-md: 8px;
     --radius-lg: 10px;
     --radius-pill: 28px;
-    
+
     /* Transitions */
     --transition-fast: 0.2s ease;
     --transition-normal: 0.3s ease;
     --transition-slow: 0.4s ease;
-    
+
     /* Shadows */
     --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
     --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -49,7 +49,7 @@
 @font-face {
     font-family: 'Dubai';
     src: url('./fonts/Dubai-Regular.woff2') format('woff2'),
-         url('./fonts/Dubai-Regular.woff') format('woff');
+        url('./fonts/Dubai-Regular.woff') format('woff');
     font-weight: normal;
     font-style: normal;
     font-display: swap;
@@ -58,7 +58,7 @@
 @font-face {
     font-family: 'Dubai';
     src: url('./fonts/Dubai-Bold.woff2') format('woff2'),
-         url('./fonts/Dubai-Bold.woff') format('woff');
+        url('./fonts/Dubai-Bold.woff') format('woff');
     font-weight: bold;
     font-style: normal;
     font-display: swap;
@@ -67,7 +67,7 @@
 @font-face {
     font-family: 'Dubai';
     src: url('./fonts/Dubai-Light.woff2') format('woff2'),
-         url('./fonts/Dubai-Light.woff') format('woff');
+        url('./fonts/Dubai-Light.woff') format('woff');
     font-weight: 300;
     font-style: normal;
     font-display: swap;
@@ -76,7 +76,7 @@
 @font-face {
     font-family: 'Dubai';
     src: url('./fonts/Dubai-Medium.woff2') format('woff2'),
-         url('./fonts/Dubai-Medium.woff') format('woff');
+        url('./fonts/Dubai-Medium.woff') format('woff');
     font-weight: 500;
     font-style: normal;
     font-display: swap;
@@ -117,7 +117,8 @@ nav {
     left: 0;
     width: 100%;
     z-index: 1000;
-    box-shadow: var(--shadow-md);
+    /* Add safe area padding for iOS devices */
+    padding-top: calc(var(--spacing-md) + env(safe-area-inset-top));
 }
 
 nav ul {
@@ -164,13 +165,19 @@ nav ul li a.active {
     box-shadow: var(--shadow-md);
     width: 100%;
     max-width: 500px;
-    margin: 6rem auto 2rem;
+    /* Adjust margin to account for nav height and safe area */
+    margin: calc(6rem + env(safe-area-inset-top)) auto 2rem;
 }
 
 /* ===========================
    TYPOGRAPHY
    =========================== */
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
     font-family: var(--font-primary);
     line-height: 1.2;
     margin-top: 0;
@@ -315,16 +322,16 @@ input[type="number"]::-webkit-outer-spin-button {
     box-shadow: var(--shadow-sm);
 }
 
-input:checked + .slider {
+input:checked+.slider {
     background-color: var(--primary-color);
 }
 
-input:checked + .slider:before {
+input:checked+.slider:before {
     transform: translateX(22px);
 }
 
 /* Focus styles for accessibility */
-.switch input:focus + .slider {
+.switch input:focus+.slider {
     box-shadow: 0 0 0 3px rgba(38, 54, 103, 0.2);
 }
 
@@ -384,6 +391,7 @@ button:disabled {
         opacity: 0;
         transform: translateY(10px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
@@ -404,27 +412,30 @@ pre {
 /* ===========================
    CHILDREN BUTTONS
    =========================== */
+/* Children Buttons Styles */
 .children-buttons {
     display: flex;
-    gap: var(--spacing-xs);
-    margin-bottom: var(--spacing-md);
-    flex-wrap: wrap;
+    gap: 5px;
+    margin-bottom: 1rem;
+    flex-wrap: nowrap; /* Prevent wrapping on all screen sizes */
+    overflow-x: auto; /* Allow horizontal scrolling if needed */
+    -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
 }
 
 .child-button {
-    flex: 1;
-    min-width: 40px;
-    padding: var(--spacing-sm);
-    border: 1px solid transparent;
-    border-radius: var(--radius-sm);
+    flex: 0 0 auto; /* Don't grow or shrink */
+    min-width: 40px; /* Minimum width for each button */
+    padding: 0.5rem 0.75rem;
+    border: none;
+    border-radius: 5px;
     background-color: #e0e0e0;
     color: #333;
-    font-family: var(--font-primary);
+    font-family: 'Dubai', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
     font-size: 1rem;
     font-weight: 500;
     cursor: pointer;
-    transition: all var(--transition-fast);
-    text-align: center;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    white-space: nowrap; /* Prevent text wrapping */
 }
 
 .child-button:hover {
@@ -432,30 +443,44 @@ pre {
     transform: translateY(-2px);
 }
 
-.child-button:focus {
-    outline: none;
-    box-shadow: 0 0 0 3px rgba(38, 54, 103, 0.2);
+.child-button[data-value="0"] {
+    background-color: #f0f0f0;
 }
 
-/* Gradient effect for children buttons */
-.child-button[data-value="0"] { background-color: #f0f0f0; }
-.child-button[data-value="1"] { background-color: #e8e8e8; }
-.child-button[data-value="2"] { background-color: #e0e0e0; }
-.child-button[data-value="3"] { background-color: #d8d8d8; }
-.child-button[data-value="4"] { background-color: #d0d0d0; }
-.child-button[data-value="5"] { background-color: #c8c8c8; }
-.child-button[data-value="6"] { background-color: #c0c0c0; }
-.child-button[data-value="7"] { 
-    background-color: #b8b8b8; 
+.child-button[data-value="1"] {
+    background-color: #e0e0e0;
+}
+
+.child-button[data-value="2"] {
+    background-color: #d0d0d0;
+}
+
+.child-button[data-value="3"] {
+    background-color: #c0c0c0;
+}
+
+.child-button[data-value="4"] {
+    background-color: #b0b0b0;
+}
+
+.child-button[data-value="5"] {
+    background-color: #a0a0a0;
+}
+
+.child-button[data-value="6"] {
+    background-color: #909090;
+}
+
+.child-button[data-value="7"] {
+    background-color: #808080;
     color: #fff;
 }
 
 .child-button.selected {
-    background-color: var(--primary-color);
+    background-color: #263667;
     color: #fff;
     transform: translateY(-2px);
-    box-shadow: var(--shadow-hover);
-    border-color: var(--primary-color);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 /* ===========================
@@ -625,33 +650,36 @@ pre {
 @media screen and (max-width: 768px) {
     .container {
         max-width: 90%;
-        margin-top: 4rem;
+        /* Increase top margin for mobile navigation */
+        margin-top: calc(5rem + env(safe-area-inset-top));
         padding: var(--spacing-lg);
     }
 
+    /* Keep children buttons horizontal on mobile */
     .children-buttons {
-        flex-wrap: wrap;
+        flex-wrap: nowrap;
+        gap: 3px;
     }
 
     .child-button {
-        flex: 1 1 calc(25% - var(--spacing-xs));
-        min-width: 60px;
-        padding: 0.75rem var(--spacing-xs);
+        min-width: 35px;
+        padding: 0.5rem 0.4rem;
+        font-size: 0.9rem;
     }
-    
+
     nav ul {
         gap: var(--spacing-sm);
     }
-    
+
     nav ul li a {
         padding: var(--spacing-xs) var(--spacing-sm);
         font-size: 0.9rem;
     }
-    
+
     h1 {
         font-size: 1.75rem;
     }
-    
+
     h2 {
         font-size: 1.5rem;
     }
@@ -661,17 +689,33 @@ pre {
     .strategy-metrics {
         grid-template-columns: 1fr;
     }
-    
+
     .strategy-card {
         padding: var(--spacing-md);
     }
-    
+
     .container {
         padding: var(--spacing-md);
+        /* Extra margin for smaller screens */
+        margin-top: calc(5.5rem + env(safe-area-inset-top));
+    }
+
+    /* Even smaller buttons on very small screens */
+    .child-button {
+        min-width: 30px;
+        padding: 0.4rem 0.3rem;
+        font-size: 0.85rem;
+    }
+}
+
+/* iOS specific adjustments */
+@supports (padding-top: env(safe-area-inset-top)) {
+    nav {
+        padding-top: calc(var(--spacing-md) + env(safe-area-inset-top));
     }
     
-    .child-button {
-        flex: 1 1 calc(50% - var(--spacing-xs));
+    .container {
+        margin-top: calc(6rem + env(safe-area-inset-top));
     }
 }
 
@@ -718,17 +762,17 @@ pre {
     nav {
         display: none;
     }
-    
+
     .container {
         box-shadow: none;
         margin: 0;
         max-width: 100%;
     }
-    
+
     button {
         display: none;
     }
-    
+
     .output {
         border: 1px solid #000;
         page-break-inside: avoid;
