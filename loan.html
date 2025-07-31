@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loan Calculator</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="icon" href="css/favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" href="css/apple-icon.png">
+    <link rel="apple-touch-icon-precomposed" href="css/apple-icon-precomposed.png">
+    <link rel="preload" href="css/fonts/Dubai-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+    <link rel="preload" href="css/fonts/Dubai-Bold.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+    <link rel="preload" href="css/fonts/Dubai-Light.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+    <link rel="preload" href="css/fonts/Dubai-Medium.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+</head>
+
+<body>
+    <nav>
+        <ul>
+            <li><a href="index.html">Salary Calculator</a></li>
+            <li><a href="advanced.html">Advanced</a></li>
+            <li><a href="loan.html" class="active">Loan Calculator</a></li>
+            <li><a href="loan-advanced.html">Loan Advanced</a></li>
+        </ul>
+    </nav>
+    <div class="container">
+        <h1>Loan Calculator</h1>
+        <form id="loanForm">
+            <label for="loan_amount">Loan Amount (KWD):</label>
+            <input type="number" id="loan_amount" name="loan_amount" step="100" value="5000" required>
+
+            <label for="interest_rate">Annual Interest Rate (%):</label>
+            <input type="number" id="interest_rate" name="interest_rate" step="0.05" value="6" required>
+
+            <label for="loan_term">Loan Term (months):</label>
+            <select id="loan_term" name="loan_term" required>
+                <option value="12">12 months (1 year)</option>
+                <option value="24">24 months (2 years)</option>
+                <option value="36">36 months (3 years)</option>
+                <option value="48">48 months (4 years)</option>
+                <option value="60" selected>60 months (5 years)</option>
+                <option value="72">72 months (6 years)</option>
+                <option value="84">84 months (7 years)</option>
+                <option value="96">96 months (8 years)</option>
+                <option value="120">120 months (10 years)</option>
+            </select>
+            <div class="hint">Select your loan repayment period.</div>
+
+            <button type="submit">Calculate</button>
+        </form>
+
+        <!-- Output will be inserted here by JavaScript -->
+
+        <div style="margin-top: 2em;">
+            <button type="button" id="showAmortization" style="background-color: #28a745; margin-bottom: 1em;">
+                Show Amortization Schedule
+            </button>
+            <div id="amortizationTable"></div>
+        </div>
+
+        <p><a href="loan-advanced.html" target="_blank" rel="noopener noreferrer">Go to Advanced Loan Calculator</a></p>
+    </div>
+
+    <script src="js/loan_calculator.js"></script>
+</body>
+
+</html>

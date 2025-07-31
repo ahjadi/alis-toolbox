@@ -20,13 +20,15 @@
         <ul>
             <li><a href="index.html">Salary Calculator</a></li>
             <li><a href="advanced.html" class="active">Advanced</a></li>
+            <li><a href="loan.html">Loan Calculator</a></li>
+            <li><a href="loan-advanced.html">Loan Advanced</a></li>
         </ul>
     </nav>
     <div class="container">
         <h1>Salary Calculator</h1>
         <form id="advancedSalaryForm">
             <label for="base_salary">Base Salary (KWD):</label>
-            <input type="number" id="base_salary" name="base_salary" step="0.01" required>
+            <input type="number" id="base_salary" name="base_salary" required>
 
             <label for="marital_status">Marital Status:</label>
             <div class="switch-container">
@@ -63,16 +65,15 @@
                 <button type="button" class="child-button" data-value="7">7+</button>
             </div>
             <input type="hidden" id="num_children" name="num_children" value="0">
-            <!-- <div class="hint">Select the number of children (max 7).</div> -->
 
             <label for="housing_compensation">Housing Compensation (KWD):</label>
-            <input type="number" id="housing_compensation" name="housing_compensation" step="0.01">
+            <input type="number" id="housing_compensation" name="housing_compensation">
 
             <label for="salary_addition">Add to Salary (KWD):</label>
-            <input type="number" id="salary_addition" name="salary_addition" step="0.01">
+            <input type="number" id="salary_addition" name="salary_addition">
 
             <label for="salary_removal">Remove from Salary (KWD):</label>
-            <input type="number" id="salary_removal" name="salary_removal" step="0.01">
+            <input type="number" id="salary_removal" name="salary_removal">
 
             <button type="submit">Calculate</button>
         </form>
