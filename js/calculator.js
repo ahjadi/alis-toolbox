@@ -157,14 +157,23 @@ function calculateBasicSalary() {
             document.querySelector('form').insertAdjacentElement('afterend', outputDiv);
         }
 
-outputDiv.innerHTML = `
-    <h2>Salary Summary</h2>
-    <div style="margin-top: 1em;">
-        <p>Total Salary:<br><strong>KWD ${summary.totalSalary}</strong></p>
-        <p class="salary-highlight">Salary After Deduction: <br><strong>KWD ${summary.salaryAfterDeduction}</strong></p>
-        <p>Amount Deducted:<br><strong>- KWD ${summary.amountDeducted}</strong></p>
-    </div>
-`;
+        outputDiv.innerHTML = `
+            <div class="summary-card">
+                <h2 class="summary-title">Salary Summary</h2>
+                <div class="summary-row">
+                    <span>Total Salary:</span>
+                    <strong>KWD ${summary.totalSalary}</strong>
+                </div>
+                <div class="summary-row highlight">
+                    <span>Salary After Deduction:</span>
+                    <strong>KWD ${summary.salaryAfterDeduction}</strong>
+                </div>
+                <div class="summary-row">
+                    <span>Amount Deducted:</span>
+                    <strong>- KWD ${summary.amountDeducted}</strong>
+                </div>
+            </div>
+        `;
         outputDiv.style.display = 'block';
 
     } catch (error) {
@@ -174,7 +183,7 @@ outputDiv.innerHTML = `
             outputDiv.className = 'output';
             document.querySelector('form').insertAdjacentElement('afterend', outputDiv);
         }
-        outputDiv.innerHTML = `<p class="error">Error: ${error.message}</p>`;
+        outputDiv.innerHTML = `<div class="summary-card"><p class="error">Error: ${error.message}</p></div>`;
         outputDiv.style.display = 'block';
     }
 }
@@ -210,14 +219,26 @@ function calculateAdvancedSalary() {
         }
 
         outputDiv.innerHTML = `
-    <h2>Salary Summary</h2>
-    <div>
-        <p>Total Salary:<br><strong>KWD ${summary.totalSalary}</strong></p>
-        <p class="salary-highlight">Salary After Deduction: <br><strong>KWD ${summary.salaryAfterDeduction}</strong></p>
-        <p>Amount Deducted:<br><strong>- KWD ${summary.amountDeducted}</strong></p>
-        <p class="salary-highlight">Final Total Salary: <br><strong>KWD ${finalSalary.toFixed(3)}</strong></p>
-    </div>
-`;
+            <div class="summary-card">
+                <h2 class="summary-title">Salary Summary</h2>
+                <div class="summary-row">
+                    <span>Total Salary:</span>
+                    <strong>KWD ${summary.totalSalary}</strong>
+                </div>
+                <div class="summary-row highlight">
+                    <span>Salary After Deduction:</span>
+                    <strong>KWD ${summary.salaryAfterDeduction}</strong>
+                </div>
+                <div class="summary-row">
+                    <span>Amount Deducted:</span>
+                    <strong>- KWD ${summary.amountDeducted}</strong>
+                </div>
+                <div class="summary-row final-highlight">
+                    <span>Final Total Salary:</span>
+                    <strong>KWD ${finalSalary.toFixed(3)}</strong>
+                </div>
+            </div>
+        `;
         outputDiv.style.display = 'block';
 
     } catch (error) {
@@ -227,7 +248,7 @@ function calculateAdvancedSalary() {
             outputDiv.className = 'output';
             document.querySelector('form').insertAdjacentElement('afterend', outputDiv);
         }
-        outputDiv.innerHTML = `<p class="error">Error: ${error.message}</p>`;
+        outputDiv.innerHTML = `<div class="summary-card"><p class="error">Error: ${error.message}</p></div>`;
         outputDiv.style.display = 'block';
     }
 }
