@@ -26,7 +26,7 @@ A comprehensive web-based financial calculator suite for Kuwait, featuring salar
 
 ## Live Demo
 
-[Visit the calculator suite](https://ahjadi.github.io/priv-salary/)
+[Visit the calculator suite](https://ahjadi.github.io/alis-toolbox/)
 
 ## Salary Calculations Included
 
