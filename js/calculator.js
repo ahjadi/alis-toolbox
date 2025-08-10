@@ -125,11 +125,21 @@ class WorkforceSupport extends BaseSalary {
         const totalSalary = this.calculateTotalSalaryBeforeTax();
         const totalSalaryAfterTax = this.calculateTotalSalaryAfterTax(taxRate);
         const amountDeducted = totalSalary - totalSalaryAfterTax;
+        
+        // Calculate base salary after tax (only base salary tax, not WFS tax)
+        const baseSalaryTax = this.baseSalary * (taxRate / 100);
+        const baseSalaryAfterTax = Math.round((this.baseSalary - baseSalaryTax) * 1000) / 1000;
+        
+        const wfsAfterTax = this.calculateWfsTaxed(taxRate);
 
         return {
             totalSalary: totalSalary.toFixed(3),
             salaryAfterDeduction: totalSalaryAfterTax.toFixed(3),
-            amountDeducted: amountDeducted.toFixed(3)
+            amountDeducted: amountDeducted.toFixed(3),
+            baseSalaryAfterDeduction: baseSalaryAfterTax.toFixed(3),
+            wfsAfterDeduction: wfsAfterTax.toFixed(3),
+            baseSalaryBeforeTax: this.baseSalary.toFixed(3),
+            wfsBeforeTax: this.calculateTotalWFSAllowance().toFixed(3)
         };
     }
 }
@@ -161,16 +171,33 @@ function calculateBasicSalary() {
             <div class="summary-card">
                 <h2 class="summary-title">Salary Summary</h2>
                 <div class="summary-row">
-                    <span>Total Salary:</span>
-                    <strong>KWD ${summary.totalSalary}</strong>
-                </div>
-                <div class="summary-row highlight">
-                    <span>Salary After Deduction:</span>
-                    <strong>KWD ${summary.salaryAfterDeduction}</strong>
+                    <span>Base Salary (Before Tax):</span>
+                    <strong style="white-space: nowrap;">KWD&nbsp;${summary.baseSalaryBeforeTax}</strong>
                 </div>
                 <div class="summary-row">
-                    <span>Amount Deducted:</span>
-                    <strong>- KWD ${summary.amountDeducted}</strong>
+                    <span>WFS Allowance (Before Tax):</span>
+                    <strong style="white-space: nowrap;">KWD&nbsp;${summary.wfsBeforeTax}</strong>
+                </div>
+                <div class="summary-row">
+                    <span>Total Salary (Before Tax):</span>
+                    <strong style="white-space: nowrap;">KWD&nbsp;${summary.totalSalary}</strong>
+                </div>
+                <hr style="margin: 15px 0; border: none; border-top: 2px solid #ddd;">
+                <div class="summary-row">
+                    <span>Base Salary After Deduction:</span>
+                    <strong style="white-space: nowrap;">KWD&nbsp;${summary.baseSalaryAfterDeduction}</strong>
+                </div>
+                <div class="summary-row">
+                    <span>WFS After Deduction:</span>
+                    <strong style="white-space: nowrap;">KWD&nbsp;${summary.wfsAfterDeduction}</strong>
+                </div>
+                <div class="summary-row highlight">
+                    <span>Total Salary After Deduction:</span>
+                    <strong style="white-space: nowrap;">KWD&nbsp;${summary.salaryAfterDeduction}</strong>
+                </div>
+                <div class="summary-row">
+                    <span>Total Amount Deducted (PIFSS):</span>
+                    <strong style="white-space: nowrap;">-&nbsp;KWD&nbsp;${summary.amountDeducted}</strong>
                 </div>
             </div>
         `;
@@ -222,20 +249,37 @@ function calculateAdvancedSalary() {
             <div class="summary-card">
                 <h2 class="summary-title">Salary Summary</h2>
                 <div class="summary-row">
-                    <span>Total Salary:</span>
-                    <strong>KWD ${summary.totalSalary}</strong>
-                </div>
-                <div class="summary-row highlight">
-                    <span>Salary After Deduction:</span>
-                    <strong>KWD ${summary.salaryAfterDeduction}</strong>
+                    <span>Base Salary (Before Tax):</span>
+                    <strong style="white-space: nowrap;">KWD&nbsp;${summary.baseSalaryBeforeTax}</strong>
                 </div>
                 <div class="summary-row">
-                    <span>Amount Deducted:</span>
-                    <strong>- KWD ${summary.amountDeducted}</strong>
+                    <span>WFS Allowance (Before Tax):</span>
+                    <strong style="white-space: nowrap;">KWD&nbsp;${summary.wfsBeforeTax}</strong>
+                </div>
+                <div class="summary-row">
+                    <span>Total Salary (Before Tax):</span>
+                    <strong style="white-space: nowrap;">KWD&nbsp;${summary.totalSalary}</strong>
+                </div>
+                <hr style="margin: 15px 0; border: none; border-top: 2px solid #ddd;">
+                <div class="summary-row">
+                    <span>Base Salary After Deduction:</span>
+                    <strong style="white-space: nowrap;">KWD&nbsp;${summary.baseSalaryAfterDeduction}</strong>
+                </div>
+                <div class="summary-row">
+                    <span>WFS After Deduction:</span>
+                    <strong style="white-space: nowrap;">KWD&nbsp;${summary.wfsAfterDeduction}</strong>
+                </div>
+                <div class="summary-row">
+                    <span>Total Salary After Deduction:</span>
+                    <strong style="white-space: nowrap;">KWD&nbsp;${summary.salaryAfterDeduction}</strong>
+                </div>
+                <div class="summary-row">
+                    <span>Total Amount Deducted (PIFSS):</span>
+                    <strong style="white-space: nowrap;">-&nbsp;KWD&nbsp;${summary.amountDeducted}</strong>
                 </div>
                 <div class="summary-row final-highlight">
                     <span>Final Total Salary:</span>
-                    <strong>KWD ${finalSalary.toFixed(3)}</strong>
+                    <strong style="white-space: nowrap;">KWD&nbsp;${finalSalary.toFixed(3)}</strong>
                 </div>
             </div>
         `;
