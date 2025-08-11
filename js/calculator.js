@@ -172,36 +172,45 @@ function calculateBasicSalary() {
                 <h2 class="summary-title">Salary Summary</h2>
                 <div class="summary-row">
                     <span>Base Salary (Before Tax):</span>
-                    <strong style="white-space: nowrap;">KWD&nbsp;${summary.baseSalaryBeforeTax}</strong>
+                    <strong>KWD&nbsp;${summary.baseSalaryBeforeTax}</strong>
                 </div>
                 <div class="summary-row">
                     <span>WFS Allowance (Before Tax):</span>
-                    <strong style="white-space: nowrap;">KWD&nbsp;${summary.wfsBeforeTax}</strong>
+                    <strong>KWD&nbsp;${summary.wfsBeforeTax}</strong>
                 </div>
                 <div class="summary-row">
                     <span>Total Salary (Before Tax):</span>
-                    <strong style="white-space: nowrap;">KWD&nbsp;${summary.totalSalary}</strong>
+                    <strong>KWD&nbsp;${summary.totalSalary}</strong>
                 </div>
-                <hr style="margin: 15px 0; border: none; border-top: 2px solid #ddd;">
                 <div class="summary-row">
                     <span>Base Salary After Deduction:</span>
-                    <strong style="white-space: nowrap;">KWD&nbsp;${summary.baseSalaryAfterDeduction}</strong>
+                    <strong>KWD&nbsp;${summary.baseSalaryAfterDeduction}</strong>
                 </div>
                 <div class="summary-row">
                     <span>WFS After Deduction:</span>
-                    <strong style="white-space: nowrap;">KWD&nbsp;${summary.wfsAfterDeduction}</strong>
+                    <strong>KWD&nbsp;${summary.wfsAfterDeduction}</strong>
                 </div>
                 <div class="summary-row highlight">
                     <span>Total Salary After Deduction:</span>
-                    <strong style="white-space: nowrap;">KWD&nbsp;${summary.salaryAfterDeduction}</strong>
+                    <strong>KWD&nbsp;${summary.salaryAfterDeduction}</strong>
                 </div>
-                <div class="summary-row">
+                <div class="summary-row final-highlight">
                     <span>Total Amount Deducted (PIFSS):</span>
-                    <strong style="white-space: nowrap;">-&nbsp;KWD&nbsp;${summary.amountDeducted}</strong>
+                    <strong>-&nbsp;KWD&nbsp;${summary.amountDeducted}</strong>
                 </div>
             </div>
         `;
+        
         outputDiv.style.display = 'block';
+
+        // Smooth scroll to results on mobile (iPhone optimization)
+        setTimeout(() => {
+            outputDiv.scrollIntoView({ 
+                behavior: 'smooth', 
+                block: 'nearest',
+                inline: 'start'
+            });
+        }, 100);
 
     } catch (error) {
         let outputDiv = document.querySelector('.output');
@@ -210,8 +219,24 @@ function calculateBasicSalary() {
             outputDiv.className = 'output';
             document.querySelector('form').insertAdjacentElement('afterend', outputDiv);
         }
-        outputDiv.innerHTML = `<div class="summary-card"><p class="error">Error: ${error.message}</p></div>`;
+        
+        outputDiv.innerHTML = `
+            <div class="summary-card">
+                <div class="summary-row" style="background-color: #ffebee; border: 1px solid var(--accent-color); border-radius: var(--radius-md); padding: var(--spacing-md);">
+                    <span style="color: var(--accent-color); font-weight: 600;">Error: ${error.message}</span>
+                </div>
+            </div>
+        `;
+        
         outputDiv.style.display = 'block';
+        
+        // Scroll to error message on mobile
+        setTimeout(() => {
+            outputDiv.scrollIntoView({ 
+                behavior: 'smooth', 
+                block: 'nearest' 
+            });
+        }, 100);
     }
 }
 
@@ -247,43 +272,67 @@ function calculateAdvancedSalary() {
 
         outputDiv.innerHTML = `
             <div class="summary-card">
-                <h2 class="summary-title">Salary Summary</h2>
+                <h2 class="summary-title">Advanced Salary Summary</h2>
                 <div class="summary-row">
                     <span>Base Salary (Before Tax):</span>
-                    <strong style="white-space: nowrap;">KWD&nbsp;${summary.baseSalaryBeforeTax}</strong>
+                    <strong>KWD&nbsp;${summary.baseSalaryBeforeTax}</strong>
                 </div>
                 <div class="summary-row">
                     <span>WFS Allowance (Before Tax):</span>
-                    <strong style="white-space: nowrap;">KWD&nbsp;${summary.wfsBeforeTax}</strong>
+                    <strong>KWD&nbsp;${summary.wfsBeforeTax}</strong>
                 </div>
                 <div class="summary-row">
                     <span>Total Salary (Before Tax):</span>
-                    <strong style="white-space: nowrap;">KWD&nbsp;${summary.totalSalary}</strong>
+                    <strong>KWD&nbsp;${summary.totalSalary}</strong>
                 </div>
-                <hr style="margin: 15px 0; border: none; border-top: 2px solid #ddd;">
                 <div class="summary-row">
                     <span>Base Salary After Deduction:</span>
-                    <strong style="white-space: nowrap;">KWD&nbsp;${summary.baseSalaryAfterDeduction}</strong>
+                    <strong>KWD&nbsp;${summary.baseSalaryAfterDeduction}</strong>
                 </div>
                 <div class="summary-row">
                     <span>WFS After Deduction:</span>
-                    <strong style="white-space: nowrap;">KWD&nbsp;${summary.wfsAfterDeduction}</strong>
+                    <strong>KWD&nbsp;${summary.wfsAfterDeduction}</strong>
                 </div>
                 <div class="summary-row">
                     <span>Total Salary After Deduction:</span>
-                    <strong style="white-space: nowrap;">KWD&nbsp;${summary.salaryAfterDeduction}</strong>
+                    <strong>KWD&nbsp;${summary.salaryAfterDeduction}</strong>
                 </div>
                 <div class="summary-row">
                     <span>Total Amount Deducted (PIFSS):</span>
-                    <strong style="white-space: nowrap;">-&nbsp;KWD&nbsp;${summary.amountDeducted}</strong>
+                    <strong>-&nbsp;KWD&nbsp;${summary.amountDeducted}</strong>
                 </div>
+                ${housingCompensation > 0 ? `
+                <div class="summary-row">
+                    <span>Housing Compensation:</span>
+                    <strong>+&nbsp;KWD&nbsp;${housingCompensation.toFixed(3)}</strong>
+                </div>` : ''}
+                ${salaryAddition > 0 ? `
+                <div class="summary-row">
+                    <span>Salary Addition:</span>
+                    <strong>+&nbsp;KWD&nbsp;${salaryAddition.toFixed(3)}</strong>
+                </div>` : ''}
+                ${salaryRemoval > 0 ? `
+                <div class="summary-row">
+                    <span>Salary Removal:</span>
+                    <strong style="color: var(--accent-color);">-&nbsp;KWD&nbsp;${salaryRemoval.toFixed(3)}</strong>
+                </div>` : ''}
                 <div class="summary-row final-highlight">
                     <span>Final Total Salary:</span>
-                    <strong style="white-space: nowrap;">KWD&nbsp;${finalSalary.toFixed(3)}</strong>
+                    <strong>KWD&nbsp;${finalSalary.toFixed(3)}</strong>
                 </div>
             </div>
         `;
+        
         outputDiv.style.display = 'block';
+
+        // Smooth scroll to results on mobile (iPhone optimization)
+        setTimeout(() => {
+            outputDiv.scrollIntoView({ 
+                behavior: 'smooth', 
+                block: 'nearest',
+                inline: 'start'
+            });
+        }, 100);
 
     } catch (error) {
         let outputDiv = document.querySelector('.output');
@@ -292,11 +341,26 @@ function calculateAdvancedSalary() {
             outputDiv.className = 'output';
             document.querySelector('form').insertAdjacentElement('afterend', outputDiv);
         }
-        outputDiv.innerHTML = `<div class="summary-card"><p class="error">Error: ${error.message}</p></div>`;
+        
+        outputDiv.innerHTML = `
+            <div class="summary-card">
+                <div class="summary-row" style="background-color: #ffebee; border: 1px solid var(--accent-color); border-radius: var(--radius-md); padding: var(--spacing-md);">
+                    <span style="color: var(--accent-color); font-weight: 600;">Error: ${error.message}</span>
+                </div>
+            </div>
+        `;
+        
         outputDiv.style.display = 'block';
+        
+        // Scroll to error message on mobile
+        setTimeout(() => {
+            outputDiv.scrollIntoView({ 
+                behavior: 'smooth', 
+                block: 'nearest' 
+            });
+        }, 100);
     }
 }
-
 // Initialize form when DOM is loaded
 document.addEventListener('DOMContentLoaded', function() {
     // Initialize marital status toggle
