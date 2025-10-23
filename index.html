@@ -26,7 +26,7 @@
         <h1>Salary Calculator</h1>
         <form id="salaryForm">
             <label for="base_salary">Base Salary (KWD):</label>
-            <input type="number" id="base_salary" name="base_salary" required>
+            <input type="number" id="base_salary" name="base_salary" min="0" required>
 
             <label for="marital_status">Marital Status:</label>
             <div class="switch-container">
@@ -75,15 +75,15 @@
                 <h3 style="margin-top: 1em; margin-bottom: 1em; color: #333;">Additional Allowances & Deductions</h3>
                 
                 <label for="housing_compensation">Housing Compensation (KWD):</label>
-                <input type="number" id="housing_compensation" name="housing_compensation" step="0.001" value="0">
+                <input type="number" id="housing_compensation" name="housing_compensation" min="0">
                 <div class="hint">Any housing allowance you receive.</div>
 
                 <label for="salary_addition">Salary Addition (KWD):</label>
-                <input type="number" id="salary_addition" name="salary_addition" step="0.001" value="0">
+                <input type="number" id="salary_addition" name="salary_addition" min="0">
                 <div class="hint">Additional salary components not included above.</div>
 
                 <label for="salary_removal">Salary Removal/Deduction (KWD):</label>
-                <input type="number" id="salary_removal" name="salary_removal" step="0.001" value="0">
+                <input type="number" id="salary_removal" name="salary_removal" min="0">
                 <div class="hint">Any additional deductions from your salary.</div>
             </div>
 

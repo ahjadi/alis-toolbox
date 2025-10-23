@@ -167,40 +167,42 @@ function calculateBasicSalary() {
             document.querySelector('form').insertAdjacentElement('afterend', outputDiv);
         }
 
+const sections = [
+            {
+                title: 'Before Tax',
+                rows: [
+                    { label: 'Base Salary', value: summary.baseSalaryBeforeTax },
+                    { label: 'WFS Allowance', value: summary.wfsBeforeTax },
+                    { label: 'Total Salary', value: summary.totalSalary, highlightClass: 'highlightBeforeTax' }
+                ]
+            },
+            {
+                title: 'After PIFSS Tax Deductions',
+                rows: [
+                    { label: 'Base Salary', value: summary.baseSalaryAfterDeduction },
+                    { label: 'WFS Allowance', value: summary.wfsAfterDeduction },
+                    { label: 'Total Deducted', value: summary.amountDeducted, negative: true, highlightClass: 'final-highlightDecuctions' },
+                    { label: 'Total Salary', value: summary.salaryAfterDeduction, highlightClass: 'final-highlightAfterTax' }
+                ]
+            }
+        ];
+
         outputDiv.innerHTML = `
             <div class="summary-card">
                 <h2 class="summary-title">Salary Summary</h2>
-                <div class="summary-row">
-                    <span>Base Salary (Before Tax):</span>
-                    <strong>KWD&nbsp;${summary.baseSalaryBeforeTax}</strong>
-                </div>
-                <div class="summary-row">
-                    <span>WFS Allowance (Before Tax):</span>
-                    <strong>KWD&nbsp;${summary.wfsBeforeTax}</strong>
-                </div>
-                <div class="summary-row">
-                    <span>Total Salary (Before Tax):</span>
-                    <strong>KWD&nbsp;${summary.totalSalary}</strong>
-                </div>
-                <div class="summary-row">
-                    <span>Base Salary After Deduction:</span>
-                    <strong>KWD&nbsp;${summary.baseSalaryAfterDeduction}</strong>
-                </div>
-                <div class="summary-row">
-                    <span>WFS After Deduction:</span>
-                    <strong>KWD&nbsp;${summary.wfsAfterDeduction}</strong>
-                </div>
-                <div class="summary-row highlight">
-                    <span>Total Salary After Deduction:</span>
-                    <strong>KWD&nbsp;${summary.salaryAfterDeduction}</strong>
-                </div>
-                <div class="summary-row final-highlight">
-                    <span>Total Amount Deducted (PIFSS):</span>
-                    <strong>-&nbsp;KWD&nbsp;${summary.amountDeducted}</strong>
-                </div>
+                ${sections.map(section => `
+                    <div class="section-group">
+                        <h3 class="section-title">${section.title}</h3>
+                        ${section.rows.map(row => `
+                            <div class="summary-row ${row.highlightClass || ''}">
+                                <span>${row.label}:</span>
+                                <strong>${row.negative ? '- ' : ''}KWD&nbsp;${row.value}</strong>
+                            </div>
+                        `).join('')}
+                    </div>
+                `).join('')}
             </div>
         `;
-        
         outputDiv.style.display = 'block';
 
         // Smooth scroll to results on mobile (iPhone optimization)
@@ -270,58 +272,53 @@ function calculateAdvancedSalary() {
             document.querySelector('form').insertAdjacentElement('afterend', outputDiv);
         }
 
-        outputDiv.innerHTML = `
-            <div class="summary-card">
-                <h2 class="summary-title">Advanced Salary Summary</h2>
-                <div class="summary-row">
-                    <span>Base Salary (Before Tax):</span>
-                    <strong>KWD&nbsp;${summary.baseSalaryBeforeTax}</strong>
-                </div>
-                <div class="summary-row">
-                    <span>WFS Allowance (Before Tax):</span>
-                    <strong>KWD&nbsp;${summary.wfsBeforeTax}</strong>
-                </div>
-                <div class="summary-row">
-                    <span>Total Salary (Before Tax):</span>
-                    <strong>KWD&nbsp;${summary.totalSalary}</strong>
-                </div>
-                <div class="summary-row">
-                    <span>Base Salary After Deduction:</span>
-                    <strong>KWD&nbsp;${summary.baseSalaryAfterDeduction}</strong>
-                </div>
-                <div class="summary-row">
-                    <span>WFS After Deduction:</span>
-                    <strong>KWD&nbsp;${summary.wfsAfterDeduction}</strong>
-                </div>
-                <div class="summary-row">
-                    <span>Total Salary After Deduction:</span>
-                    <strong>KWD&nbsp;${summary.salaryAfterDeduction}</strong>
-                </div>
-                <div class="summary-row">
-                    <span>Total Amount Deducted (PIFSS):</span>
-                    <strong>-&nbsp;KWD&nbsp;${summary.amountDeducted}</strong>
-                </div>
-                ${housingCompensation > 0 ? `
-                <div class="summary-row">
-                    <span>Housing Compensation:</span>
-                    <strong>+&nbsp;KWD&nbsp;${housingCompensation.toFixed(3)}</strong>
-                </div>` : ''}
-                ${salaryAddition > 0 ? `
-                <div class="summary-row">
-                    <span>Salary Addition:</span>
-                    <strong>+&nbsp;KWD&nbsp;${salaryAddition.toFixed(3)}</strong>
-                </div>` : ''}
-                ${salaryRemoval > 0 ? `
-                <div class="summary-row">
-                    <span>Salary Removal:</span>
-                    <strong style="color: var(--accent-color);">-&nbsp;KWD&nbsp;${salaryRemoval.toFixed(3)}</strong>
-                </div>` : ''}
-                <div class="summary-row final-highlight">
-                    <span>Final Total Salary:</span>
-                    <strong>KWD&nbsp;${finalSalary.toFixed(3)}</strong>
-                </div>
+        const sections = [
+    {
+        title: 'Before Tax',
+        rows: [
+            { label: 'Base Salary', value: summary.baseSalaryBeforeTax },
+            { label: 'WFS Allowance', value: summary.wfsBeforeTax },
+            { label: 'Total Salary', value: summary.totalSalary, highlightClass: 'highlightBeforeTax' }
+        ]
+    },
+    {
+        title: 'After PIFSS Tax Deductions',
+        rows: [
+            { label: 'Base Salary', value: summary.baseSalaryAfterDeduction },
+            { label: 'WFS Allowance', value: summary.wfsAfterDeduction },
+            { label: 'Total Deducted', value: summary.amountDeducted, negative: true, highlightClass: 'final-highlightDecuctions' },
+            { label: 'Total Salary', value: summary.salaryAfterDeduction, highlightClass: 'final-highlightAfterTax' }
+        ]
+    },
+    {
+        title: 'After Additional Modifications',
+        rows: [
+            ...(housingCompensation > 0 ? [{ label: 'Housing Compensation', value: housingCompensation.toFixed(3), positive: true }] : []),
+            ...(salaryAddition > 0 ? [{ label: 'Salary Addition', value: salaryAddition.toFixed(3), positive: true }] : []),
+            ...(salaryRemoval > 0 ? [{ label: 'Salary Removal', value: salaryRemoval.toFixed(3), negative: true, redText: true }] : []),
+            { label: 'Final Total Salary', value: finalSalary.toFixed(3), highlightClass: 'final-highlightAfterTax' }
+        ]
+    }
+];
+
+outputDiv.innerHTML = `
+    <div class="summary-card">
+        <h2 class="summary-title">Advanced Salary Summary</h2>
+        ${sections.map(section => `
+            <div class="section-group">
+                <h3 class="section-title">${section.title}</h3>
+                ${section.rows.map(row => `
+                    <div class="summary-row ${row.highlightClass || ''}">
+                        <span>${row.label}:</span>
+                        <strong ${row.redText ? 'style="color: var(--accent-color);"' : ''}>
+                            ${row.positive ? '+ ' : ''}${row.negative ? '- ' : ''}KWD&nbsp;${row.value}
+                        </strong>
+                    </div>
+                `).join('')}
             </div>
-        `;
+        `).join('')}
+    </div>
+`;
         
         outputDiv.style.display = 'block';
 
