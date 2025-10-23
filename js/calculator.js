@@ -363,6 +363,17 @@ function calculateAdvancedSalary() {
 }
 // Initialize form when DOM is loaded
 document.addEventListener('DOMContentLoaded', function() {
+    // Toggle Advanced Options
+    const toggleBtn = document.getElementById('toggleAdvanced');
+    if (toggleBtn) {
+        toggleBtn.addEventListener('click', function() {
+            const advancedOptions = document.getElementById('advancedOptions');
+            const isHidden = advancedOptions.style.display === 'none';
+            advancedOptions.style.display = isHidden ? 'block' : 'none';
+            this.textContent = isHidden ? 'Hide Advanced Options' : 'Show Advanced Options';
+        });
+    }
+
     // Initialize marital status toggle
     const maritalToggle = document.getElementById('marital_status_toggle');
     if (maritalToggle) {
@@ -394,21 +405,23 @@ document.addEventListener('DOMContentLoaded', function() {
         defaultButton.classList.add('selected');
     }
 
-    // Add event listener to form if it exists
-    const basicForm = document.getElementById('salaryForm');
-    const advancedForm = document.getElementById('advancedSalaryForm');
-    
-    if (basicForm) {
-        basicForm.addEventListener('submit', function(e) {
+    // Add event listener to salary form (handles both basic and advanced)
+    const salaryForm = document.getElementById('salaryForm');
+    if (salaryForm) {
+        salaryForm.addEventListener('submit', function(e) {
             e.preventDefault();
-            calculateBasicSalary();
-        });
-    }
-    
-    if (advancedForm) {
-        advancedForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            calculateAdvancedSalary();
+            
+            // Check if advanced options are being used
+            const housingCompensation = parseFloat(document.getElementById('housing_compensation').value) || 0;
+            const salaryAddition = parseFloat(document.getElementById('salary_addition').value) || 0;
+            const salaryRemoval = parseFloat(document.getElementById('salary_removal').value) || 0;
+            
+            // If any advanced options are set, use advanced calculation
+            if (housingCompensation > 0 || salaryAddition > 0 || salaryRemoval > 0) {
+                calculateAdvancedSalary();
+            } else {
+                calculateBasicSalary();
+            }
         });
     }
 });

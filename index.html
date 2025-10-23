@@ -6,9 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Salary Calculator</title>
     <link rel="stylesheet" href="css/styles.css">
-    <!-- Add favicon -->
     <link rel="icon" href="css/favicon.ico" type="image/x-icon">
-    <!-- Add Apple touch icons -->
     <link rel="apple-touch-icon" href="css/apple-icon.png">
     <link rel="apple-touch-icon-precomposed" href="css/apple-icon-precomposed.png">
     <link rel="preload" href="css/fonts/Dubai-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
@@ -21,9 +19,7 @@
     <nav>
         <ul>
             <li><a href="index.html" class="active">Salary Calculator</a></li>
-            <li><a href="advanced.html">Advanced Salary</a></li>
             <li><a href="loan.html">Loan Calculator</a></li>
-            <li><a href="loan-advanced.html">Loan Advanced</a></li>
         </ul>
     </nav>
     <div class="container">
@@ -31,7 +27,6 @@
         <form id="salaryForm">
             <label for="base_salary">Base Salary (KWD):</label>
             <input type="number" id="base_salary" name="base_salary" required>
-            <!-- <div class="hint">Enter your base salary in Kuwaiti Dinar (KWD).</div> -->
 
             <label for="marital_status">Marital Status:</label>
             <div class="switch-container">
@@ -43,7 +38,6 @@
                 <span>Married</span>
             </div>
             <input type="hidden" id="marital_status" name="marital_status" value="SINGLE">
-            <!-- <div class="hint">Select your marital status.</div> -->
 
             <label for="degree_type">Degree Type:</label>
             <select id="degree_type" name="degree_type" required>
@@ -68,14 +62,35 @@
                 <button type="button" class="child-button" data-value="7">7+</button>
             </div>
             <input type="hidden" id="num_children" name="num_children" value="0">
-            <!-- <div class="hint">Select the number of children (max 7).</div> -->
+
+            <!-- Advanced Options Toggle -->
+            <div style="margin-top: 1.5em; margin-bottom: 1em;">
+                <button type="button" id="toggleAdvanced" style="background-color: #6c757d; width: 100%;">
+                    Show Advanced Options
+                </button>
+            </div>
+
+            <!-- Advanced Options Section (Initially Hidden) -->
+            <div id="advancedOptions" style="display: none;">
+                <h3 style="margin-top: 1em; margin-bottom: 1em; color: #333;">Additional Allowances & Deductions</h3>
+                
+                <label for="housing_compensation">Housing Compensation (KWD):</label>
+                <input type="number" id="housing_compensation" name="housing_compensation" step="0.001" value="0">
+                <div class="hint">Any housing allowance you receive.</div>
+
+                <label for="salary_addition">Salary Addition (KWD):</label>
+                <input type="number" id="salary_addition" name="salary_addition" step="0.001" value="0">
+                <div class="hint">Additional salary components not included above.</div>
+
+                <label for="salary_removal">Salary Removal/Deduction (KWD):</label>
+                <input type="number" id="salary_removal" name="salary_removal" step="0.001" value="0">
+                <div class="hint">Any additional deductions from your salary.</div>
+            </div>
 
             <button type="submit">Calculate</button>
         </form>
 
         <!-- Output will be inserted here by JavaScript -->
-
-        <p><a href="advanced.html" target="_blank" rel="noopener noreferrer">Go to Advanced Calculator</a></p>
     </div>
 
     <script src="js/calculator.js"></script>
