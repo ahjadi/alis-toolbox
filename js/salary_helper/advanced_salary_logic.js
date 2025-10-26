@@ -10,12 +10,12 @@ export function calculateAdvancedSalary() {
         const housingCompensation = parseFloat(document.getElementById('housing_compensation').value) || 0;
         const salaryAddition = parseFloat(document.getElementById('salary_addition').value) || 0;
         const salaryRemoval = parseFloat(document.getElementById('salary_removal').value) || 0;
-
+        const postGradStatus = document.getElementById('post_grad_status').value;
         if (isNaN(baseSalary) || isNaN(numChildren)) {
             throw new Error("Please enter valid numbers");
         }
 
-        const workforceSupport = new WorkforceSupport(baseSalary, maritalStatus, degreeType, numChildren);
+        const workforceSupport = new WorkforceSupport(baseSalary, maritalStatus, degreeType, numChildren, postGradStatus);
         const summary = workforceSupport.getSalarySummary();
 
         // Calculate final salary with additional adjustments
