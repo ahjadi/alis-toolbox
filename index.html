@@ -41,12 +41,17 @@
 
             <label for="degree_type">Degree Type:</label>
             <select id="degree_type" name="degree_type" required>
-                <option value="MEDICAL_ENGINEERING_PHARMACY">Medical/Engineering/Pharmacy</option>
+                <option value="MEDICAL_ENGINEERING_PHARMACY">Medical / Engineering / Pharmacy</option>
                 <option value="OTHER_BACHELOR_1">Other Bachelor 1</option>
                 <option value="OTHER_BACHELOR_2">Other Bachelor 2</option>
-                <option value="DIPLOMA">Diploma</option>
-                <option value="HIGH_SCHOOL">High School</option>
-                <option value="MiddleSchool">Middle School</option>
+                <option value="DIPLOMA_OR_HIGH_SCHOOL_PLUS_2">Diploma or High School + 2 years training</option>
+                <option value="HIGH_SCHOOL_PLUS_1">High School + 1 year training / equivalent experience</option>
+                <option value="HIGH_SCHOOL_ONLY">High School only</option>
+                <option value="MIDDLE_SCHOOL_PLUS_3">Middle School + 3 years training</option>
+                <option value="MIDDLE_SCHOOL_PLUS_1">Middle School + 1 year training / equivalent experience</option>
+                <option value="MIDDLE_SCHOOL_ONLY">Middle School only</option>
+                <option value="BELOW_MIDDLE_PLUS_2">Below Middle + 2 years training</option>
+                <option value="BELOW_MIDDLE">Below Middle only</option>
             </select>
             <div class="hint">Select your highest degree.</div>
 
@@ -63,6 +68,14 @@
             </div>
             <input type="hidden" id="num_children" name="num_children" value="0">
 
+            <label for="post_grad_status">Higher Education:</label>
+            <select id="post_grad_status" name="post_grad_status" required>
+                <option value="No">No</option>
+                <option value="MASTER">Masters</option>
+                <option value="DOCTORATE">Doctorate</option>
+            </select>
+            <div class="hint">Select your postgraduate qualification (if any).</div>
+            
             <!-- Advanced Options Toggle -->
             <div style="margin-top: 1.5em; margin-bottom: 1em;">
                 <button type="button" id="toggleAdvanced" style="background-color: #6c757d; width: 100%;">
@@ -73,7 +86,7 @@
             <!-- Advanced Options Section (Initially Hidden) -->
             <div id="advancedOptions" style="display: none;">
                 <h3 style="margin-top: 1em; margin-bottom: 1em; color: #333;">Additional Allowances & Deductions</h3>
-                
+
                 <label for="housing_compensation">Housing Compensation (KWD):</label>
                 <input type="number" id="housing_compensation" name="housing_compensation" min="0">
                 <div class="hint">Any housing allowance you receive.</div>
@@ -92,8 +105,7 @@
 
         <!-- Output will be inserted here by JavaScript -->
     </div>
-
-    <script src="js/calculator.js"></script>
+    <script type="module" src="js/main_salary_calculator.js"></script>
 </body>
 
 </html>
