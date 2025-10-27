@@ -789,11 +789,11 @@ pre {
     box-shadow: var(--shadow-md);
     font-family: var(--font-primary);
     transition: var(--transition-normal);
-    font-size: 13px;
+    font-size: 15px;
 }
 
 .summary-title {
-    font-size: 1rem;
+    font-size: 1.1rem;
     font-weight: bold;
     margin-bottom: var(--spacing-md);
     color: var(--text-primary);
@@ -807,7 +807,7 @@ pre {
 }
 
 .section-title {
-    font-size: 0.90rem;
+    font-size: 0.95rem;
     font-weight: 600;
     margin-top: var(--spacing-md);
     margin-bottom: var(--spacing-sm);
@@ -819,7 +819,7 @@ pre {
     justify-content: space-between;
     align-items: center;
     margin: var(--spacing-sm) 0;
-    font-size: 0.85rem;
+    font-size: 0.90rem;
     color: var(--text-secondary);
     white-space: nowrap;
 }
