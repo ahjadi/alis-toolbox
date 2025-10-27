@@ -44,17 +44,17 @@ export function calculateAdvancedSalary() {
                 rows: [
                     { label: 'Base Salary', value: summary.baseSalaryAfterDeduction },
                     { label: 'WFS Allowance', value: summary.wfsAfterDeduction },
-                    { label: 'Total Deducted', value: summary.amountDeducted, negative: true, highlightClass: 'final-highlightDecuctions' },
+                    { label: 'PIFSS', value: summary.amountDeducted, negative: true, highlightClass: 'final-highlightDecuctions' },
                     { label: 'Total Salary', value: summary.salaryAfterDeduction, highlightClass: 'final-highlightAfterTax' }
                 ]
             },
             {
                 title: 'After Additional Modifications',
                 rows: [
-                    ...(housingCompensation > 0 ? [{ label: 'Housing Compensation', value: housingCompensation.toFixed(3), positive: true }] : []),
+                    ...(housingCompensation > 0 ? [{ label: 'Housing', value: housingCompensation.toFixed(3), positive: true }] : []),
                     ...(salaryAddition > 0 ? [{ label: 'Salary Addition', value: salaryAddition.toFixed(3), positive: true }] : []),
                     ...(salaryRemoval > 0 ? [{ label: 'Salary Removal', value: salaryRemoval.toFixed(3), negative: true, redText: true }] : []),
-                    { label: 'Final Total Salary', value: finalSalary.toFixed(3), highlightClass: 'final-highlightAfterTax' }
+                    { label: 'Net Income', value: finalSalary.toFixed(3), highlightClass: 'final-highlightAfterTax' }
                 ]
             }
         ];
@@ -67,11 +67,11 @@ export function calculateAdvancedSalary() {
                 <h3 class="section-title">${section.title}</h3>
                 ${section.rows.map(row => `
                     <div class="summary-row ${row.highlightClass || ''}">
-                        <span>${row.label}:</span>
-                        <strong ${row.redText ? 'style="color: var(--accent-color);"' : ''}>
-                            ${row.positive ? '+ ' : ''}${row.negative ? '- ' : ''}KWD&nbsp;${row.value}
-                        </strong>
-                    </div>
+    <span>${row.label}:</span>
+    <strong ${row.redText ? 'style="color: var(--accent-color);"' : ''}>
+        KWD&nbsp;${row.positive ? '+' : row.negative ? '-' : ''}${row.value}
+    </strong>
+</div>
                 `).join('')}
             </div>
         `).join('')}
