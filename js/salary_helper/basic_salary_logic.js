@@ -33,11 +33,11 @@ export function calculateBasicSalary() {
                 ]
             },
             {
-                title: 'After PIFSS Tax Deductions',
+                title: 'After Tax',
                 rows: [
                     { label: 'Base Salary', value: summary.baseSalaryAfterDeduction },
                     { label: 'WFS Allowance', value: summary.wfsAfterDeduction },
-                    { label: 'Total Deducted', value: summary.amountDeducted, negative: true, highlightClass: 'final-highlightDecuctions' },
+                    { label: 'PIFFS', value: summary.amountDeducted, negative: true, highlightClass: 'final-highlightDecuctions' },
                     { label: 'Total Salary', value: summary.salaryAfterDeduction, highlightClass: 'final-highlightAfterTax' }
                 ]
             }
@@ -50,10 +50,11 @@ export function calculateBasicSalary() {
                     <div class="section-group">
                         <h3 class="section-title">${section.title}</h3>
                         ${section.rows.map(row => `
-                            <div class="summary-row ${row.highlightClass || ''}">
-                                <span>${row.label}:</span>
-                                <strong>${row.negative ? '- ' : ''}KWD&nbsp;${row.value}</strong>
-                            </div>
+
+<div class="summary-row ${row.highlightClass || ''}">
+    <span style="white-space: nowrap;">${row.label}:&nbsp;</span>
+    <strong>KWD&nbsp;${row.negative ? '- ' : ''}${row.value}</strong>
+</div>
                         `).join('')}
                     </div>
                 `).join('')}
