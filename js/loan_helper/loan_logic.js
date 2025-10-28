@@ -23,12 +23,12 @@ export function calculateLoanCombined() {
         }
 
         outputDiv.innerHTML = `
-            <h2>Loan Summary</h2>
+            <h2 class = "special-for-loan">Loan Summary</h2>
 <div style="margin-top: 1em;">
-    <p>Monthly Payment:<br><strong>KWD ${summary.monthlyPayment}</strong></p>
-    <p>Total Payment:<br><strong>KWD ${summary.totalPayment}</strong></p>
-    <p>Total Interest:<br><strong style="color: var(--accent-color);">KWD ${summary.totalInterest}</strong></p>
-    <p>Effective Interest Rate:<br><strong style="color: var(--accent-color);">${summary.effectiveRate}%</strong></p>
+    <p class = "special-for-loan">Monthly Payment:<br><strong>KWD ${summary.monthlyPayment}</strong></p>
+    <p class = "special-for-loan">Total Payment:<br><strong>KWD ${summary.totalPayment}</strong></p>
+    <p class = "special-for-loan2">Total Interest:<br><strong style="color: var(--accent-color);">KWD ${summary.totalInterest}</strong></p>
+    <p class = "special-for-loan2">Effective Interest Rate:<br><strong style="color: var(--accent-color);">${summary.effectiveRate}%</strong></p>
 </div>
         `;
         outputDiv.style.display = 'block';
