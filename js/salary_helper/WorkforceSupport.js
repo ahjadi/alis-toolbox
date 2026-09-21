@@ -2,10 +2,17 @@ import { BaseSalary } from './BaseSalary.js';
 import { DEGREE_DATA, PostGradStatus } from './salary_data.js';
 
 export class WorkforceSupport extends BaseSalary {
-    static CHILDREN_INCREMENT = 50; // Fixed at 50 KD per child, max 7 children
-    static SALARY_CAP = 1250; // Salary cap for increment adjustment
+    static CHILDREN_INCREMENT = 50;
+    static MAX_CHILDREN = 7;
+    static SALARY_CAP = 1250;
 
-    constructor(baseSalary, maritalStatus, degreeType, numChildren, postGradStatus) {
+    constructor(
+        baseSalary,
+        maritalStatus,
+        degreeType,
+        numChildren,
+        postGradStatus
+    ) {
         super(baseSalary);
 
         if (!DEGREE_DATA[degreeType]) {
@@ -14,29 +21,47 @@ export class WorkforceSupport extends BaseSalary {
 
         this.maritalStatus = maritalStatus;
         this.degreeType = degreeType;
-        this.numChildren = Math.min(numChildren, 7); // Max 7 children allowed
+
+        this.numChildren = Math.min(
+            Math.max(numChildren, 0),
+            WorkforceSupport.MAX_CHILDREN
+        );
+
         this.postGradStatus = postGradStatus;
 
-        this.postGradIncrease = PostGradStatus[this.postGradStatus];
+        this.postGradIncrease =
+            PostGradStatus[this.postGradStatus] || 0;
 
         const degreeInfo = DEGREE_DATA[degreeType];
-        this.socialAllowance = degreeInfo.social_allowance[maritalStatus];
-        this.additionalBase = degreeInfo.additional; // Store the base additional object
-        this.degreeIncrement = degreeInfo.degree_increment;
-        this.socialAllowanceIncrease = degreeInfo.social_allowance_increase[maritalStatus];
-        this.childrenIncrement = this.numChildren * WorkforceSupport.CHILDREN_INCREMENT;
 
-        // Calculate the adjusted additional based on salary cap
-        this.additional = this.calculateAdjustedAdditional();
+        this.socialAllowance =
+            degreeInfo.social_allowance[maritalStatus];
+
+        this.additionalBase =
+            degreeInfo.additional;
+
+        this.degreeIncrement =
+            degreeInfo.degree_increment;
+
+        this.socialAllowanceIncrease =
+            degreeInfo.social_allowance_increase[maritalStatus];
+
+        this.childrenIncrement =
+            this.numChildren *
+            WorkforceSupport.CHILDREN_INCREMENT;
+
+        this.additional =
+            this.calculateAdjustedAdditional();
+    }
+
+    round(value) {
+        return Math.round(
+            (value + Number.EPSILON) * 1000
+        ) / 1000;
     }
 
     calculateAdjustedAdditional() {
-        // Calculate total without the increment (50 KD)
-        const baseAdditional = this.additionalBase.cost_of_living + this.additionalBase.bonus;
-        const totalWithoutIncrement = this.baseSalary;
-
-        // If total without increment is already at or above cap, no increment
-        if (totalWithoutIncrement >= WorkforceSupport.SALARY_CAP) {
+        if (this.baseSalary >= WorkforceSupport.SALARY_CAP) {
             return {
                 cost_of_living: this.additionalBase.cost_of_living,
                 bonus: this.additionalBase.bonus,
@@ -44,9 +69,15 @@ export class WorkforceSupport extends BaseSalary {
             };
         }
 
-        // Calculate how much increment can be added
-        const remainingToCap = WorkforceSupport.SALARY_CAP - totalWithoutIncrement;
-        const adjustedIncrement = Math.min(this.additionalBase.increment, remainingToCap);
+        const remainingToCap =
+            WorkforceSupport.SALARY_CAP -
+            this.baseSalary;
+
+        const adjustedIncrement =
+            Math.min(
+                this.additionalBase.increment,
+                remainingToCap
+            );
 
         return {
             cost_of_living: this.additionalBase.cost_of_living,
@@ -56,11 +87,12 @@ export class WorkforceSupport extends BaseSalary {
     }
 
     calculateTotalWFSAllowance() {
-        const additionalTotal = this.additional.cost_of_living +
+        const additionalTotal =
+            this.additional.cost_of_living +
             this.additional.bonus +
             this.additional.increment;
 
-        return (
+        return this.round(
             this.socialAllowance +
             this.socialAllowanceIncrease +
             this.degreeIncrement +
@@ -70,47 +102,169 @@ export class WorkforceSupport extends BaseSalary {
         );
     }
 
-    calculateTotalTaxableAllowance() {
-        return this.socialAllowance + this.degreeIncrement;
+    /*
+     * WFS components included in the PIFSS basic insurance salary:
+     *
+     * - Social allowance
+     * - Social allowance increase
+     * - Children's allowance
+     * - Educational qualification allowance
+     * - Postgraduate educational qualification allowance
+     *
+     * The BaseSalary class applies the KD 1,500
+     * basic-insurance ceiling.
+     */
+calculatePIFSSBasicInsuranceAllowances() {
+    return this.round(
+        this.socialAllowance +
+        this.childrenIncrement +
+        this.degreeIncrement +
+        this.postGradIncrease
+    );
+}
+
+    /*
+     * WFS components outside the PIFSS basic-insurance salary.
+     *
+     * This is the WFS additional package:
+     * - KD 120 cost of living
+     * - KD 50 bonus
+     * - KD 50 increment, subject to the KD 1,250 rule
+     */
+    calculateNonPifssWfsAllowance() {
+        return this.round(
+            this.additional.cost_of_living +
+            this.additional.bonus +
+            this.additional.increment
+        );
     }
 
-    calculateWfsTaxed(taxRate = 10.5) {
-        return Math.round((this.calculateTotalWFSAllowance() - (this.calculateTotalTaxableAllowance() * (taxRate / 100))) * 1000) / 1000;
+    /*
+     * No separate additional insurance allowance is currently
+     * being classified outside the basic insurance salary.
+     */
+    calculatePIFSSAdditionalInsuranceAllowances() {
+        return 0;
     }
 
-    calculateTax(taxRate = 10.5) {
-        const workforceTax = this.calculateTotalTaxableAllowance() * (taxRate / 100);
-        const baseTax = super.calculateTax(taxRate);
-        return Math.round((workforceTax + baseTax) * 1000) / 1000;
+    calculatePIFSSDetails() {
+        const basicInsuranceAllowances =
+            this.calculatePIFSSBasicInsuranceAllowances();
+
+        const additionalInsuranceAllowances =
+            this.calculatePIFSSAdditionalInsuranceAllowances();
+
+        return this.calculatePIFSS(
+            basicInsuranceAllowances,
+            additionalInsuranceAllowances
+        );
+    }
+
+    calculateTax() {
+        return this.calculatePIFSSDetails().total;
+    }
+
+    /*
+     * Kept for compatibility with existing code.
+     */
+    calculateWfsTaxed() {
+        const totalWFS =
+            this.calculateTotalWFSAllowance();
+
+        const totalPIFSS =
+            this.calculateTax();
+
+        const totalSalary =
+            this.calculateTotalSalaryBeforeTax();
+
+        if (totalSalary <= 0) {
+            return this.round(totalWFS);
+        }
+
+        const wfsShare =
+            totalWFS / totalSalary;
+
+        const wfsDeduction =
+            totalPIFSS * wfsShare;
+
+        return this.round(
+            totalWFS - wfsDeduction
+        );
     }
 
     calculateTotalSalaryBeforeTax() {
-        return this.baseSalary + this.calculateTotalWFSAllowance();
+        return this.round(
+            this.baseSalary +
+            this.calculateTotalWFSAllowance()
+        );
     }
 
-    calculateTotalSalaryAfterTax(taxRate = 10.5) {
-        return Math.round((this.calculateTotalSalaryBeforeTax() - this.calculateTax(taxRate)) * 1000) / 1000;
+    calculateTotalSalaryAfterTax() {
+        return this.round(
+            this.calculateTotalSalaryBeforeTax() -
+            this.calculateTax()
+        );
     }
 
-    getSalarySummary(taxRate = 10.5) {
-        const totalSalary = this.calculateTotalSalaryBeforeTax();
-        const totalSalaryAfterTax = this.calculateTotalSalaryAfterTax(taxRate);
-        const amountDeducted = totalSalary - totalSalaryAfterTax;
+    getSalarySummary() {
+        const totalSalary =
+            this.calculateTotalSalaryBeforeTax();
 
-        // Calculate base salary after tax (only base salary tax, not WFS tax)
-        const baseSalaryTax = this.baseSalary * (taxRate / 100);
-        const baseSalaryAfterTax = Math.round((this.baseSalary - baseSalaryTax) * 1000) / 1000;
+        const pifss =
+            this.calculatePIFSSDetails();
 
-        const wfsAfterTax = this.calculateWfsTaxed(taxRate);
+        const totalSalaryAfterTax =
+            this.calculateTotalSalaryAfterTax();
+
+        const amountDeducted =
+            totalSalary -
+            totalSalaryAfterTax;
 
         return {
-            totalSalary: totalSalary.toFixed(3),
-            salaryAfterDeduction: totalSalaryAfterTax.toFixed(3),
-            amountDeducted: amountDeducted.toFixed(3),
-            baseSalaryAfterDeduction: baseSalaryAfterTax.toFixed(3),
-            wfsAfterDeduction: wfsAfterTax.toFixed(3),
-            baseSalaryBeforeTax: this.baseSalary.toFixed(3),
-            wfsBeforeTax: this.calculateTotalWFSAllowance().toFixed(3)
+            totalSalary:
+                totalSalary.toFixed(3),
+
+            salaryAfterDeduction:
+                totalSalaryAfterTax.toFixed(3),
+
+            amountDeducted:
+                amountDeducted.toFixed(3),
+
+            baseSalaryBeforeTax:
+                this.baseSalary.toFixed(3),
+
+            wfsBeforeTax:
+                this.calculateTotalWFSAllowance().toFixed(3),
+
+            pifssBasicInsuranceAllowances:
+                this.calculatePIFSSBasicInsuranceAllowances().toFixed(3),
+
+            nonPifssWfsAllowance:
+                this.calculateNonPifssWfsAllowance().toFixed(3),
+
+            pifssBasicInsuranceSalary:
+                pifss.basicInsuranceSalary.toFixed(3),
+
+            pifssSupplementaryInsuranceSalary:
+                pifss.supplementaryInsuranceSalary.toFixed(3),
+
+            pifssBasicContribution:
+                pifss.basicContribution.toFixed(3),
+
+            pifssSupplementaryContribution:
+                pifss.supplementaryContribution.toFixed(3),
+
+            pifssPensionIncrease:
+                pifss.pensionIncreaseContribution.toFixed(3),
+
+            pifssFinancialRemuneration:
+                pifss.financialRemunerationContribution.toFixed(3),
+
+            pifssUnemployment:
+                pifss.unemploymentContribution.toFixed(3),
+
+            pifssTotal:
+                pifss.total.toFixed(3)
         };
     }
 }

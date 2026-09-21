@@ -931,3 +931,16 @@ input[type="number"] {
     -moz-appearance: textfield;
     appearance: textfield;
 }
+.arabic-label {
+    display: block;
+    font-size: 0.8em;
+    font-weight: 400;
+    opacity: 0.65;
+    direction: rtl;
+    margin-top: 2px;
+}
+
+.section-arabic {
+    margin-top: 3px;
+    font-weight: 400;
+}
