@@ -31,7 +31,7 @@ export function displaySalarySummary(summary) {
                     value: summary.wfs.total.toFixed(3)
                 },
                 {
-                    label: 'Gross Salary',
+                    label: 'Gross Salary (KWD)',
                     value: summary.grossSalary.toFixed(3),
                     highlightClass: 'highlightBeforeTax'
                 }
@@ -60,7 +60,7 @@ export function displaySalarySummary(summary) {
                     negative: true
                 },
                 {
-                    label: 'Total PIFSS Deduction',
+                    label: 'Total PIFSS Deduction (KWD)',
                     value: summary.pifss.total.toFixed(3),
                     negative: true,
                     highlightClass: 'final-highlightDecuctions'
@@ -81,7 +81,7 @@ export function displaySalarySummary(summary) {
                     negative: true
                 },
                 {
-                    label: 'Net Salary',
+                    label: 'Net Salary (KWD)',
                     value: summary.netSalary.toFixed(3),
                     highlightClass: 'final-highlightAfterTax'
                 }
@@ -117,7 +117,7 @@ export function displaySalarySummary(summary) {
                     : []),
 
                 {
-                    label: 'Net Income',
+                    label: 'Net Income (KWD)',
                     value: summary.finalSalary.toFixed(3),
                     highlightClass: 'final-highlightAfterTax'
                 }
@@ -145,7 +145,7 @@ export function displaySalarySummary(summary) {
                                 ? 'style="color: var(--accent-color);"'
                                 : ''
                             }>
-                                KWD&nbsp;${row.positive ? '+ ' : row.negative ? '- ' : ''}${row.value}
+                                &nbsp;${row.positive ? '+ ' : row.negative ? '- ' : ''}${row.value}
                             </strong>
                         </div>
                     `).join('')}
