@@ -10,84 +10,84 @@ export function displaySalarySummary(summary) {
             .insertAdjacentElement('afterend', outputDiv);
     }
 
-    const breakdownSections = [
-        {
-            title: 'Before PIFSS Deductions',
-            rows: [
-                {
-                    label: 'Base Salary',
-                    value: summary.baseSalary.toFixed(3)
-                },
-                {
-                    label: 'PIFSS Basic-Insurable WFS',
-                    value: summary.wfs.pifssInsurable.toFixed(3)
-                },
-                {
-                    label: 'Other WFS Allowance',
-                    value: summary.wfs.nonPifss.toFixed(3)
-                },
-                {
-                    label: 'Total WFS Allowance',
-                    value: summary.wfs.total.toFixed(3)
-                },
-                {
-                    label: 'Gross Salary',
-                    value: summary.grossSalary.toFixed(3),
-                    highlightClass: 'highlightBeforeTax'
-                }
-            ]
-        },
+const breakdownSections = [
+    {
+        title: 'Before PIFSS Deductions',
+        rows: [
+            {
+                label: 'Base Salary',
+                value: summary.baseSalary.toFixed(3)
+            },
+            {
+                label: 'PIFSS Basic-Insurable WFS',
+                value: summary.wfs.pifssInsurable.toFixed(3)
+            },
+            {
+                label: 'Other WFS Allowance',
+                value: summary.wfs.nonPifss.toFixed(3)
+            },
+            {
+                label: 'Total WFS Allowance',
+                value: summary.wfs.total.toFixed(3)
+            },
+            {
+                label: 'Gross Salary',
+                value: summary.grossSalary.toFixed(3),
+                highlightClass: 'highlightBeforeTax'
+            }
+        ]
+    },
 
-        {
-            title: 'PIFSS Deductions',
-            rows: [
-                {
-                    label: 'Basic Insurance Salary',
-                    value: summary.pifss.basicInsuranceSalary.toFixed(3)
-                },
-                {
-                    label: 'Basic Insurance Contribution (5%)',
-                    value: summary.pifss.basicContribution.toFixed(3),
-                    negative: true
-                },
-                {
-                    label: 'Supplementary Insurance Salary',
-                    value: summary.pifss.supplementaryInsuranceSalary.toFixed(3)
-                },
-                {
-                    label: 'Supplementary Contribution (5%)',
-                    value: summary.pifss.supplementaryContribution.toFixed(3),
-                    negative: true
-                },
-                {
-                    label: 'Total PIFSS Deduction',
-                    value: summary.pifss.total.toFixed(3),
-                    negative: true,
-                    highlightClass: 'final-highlightDecuctions'
-                }
-            ]
-        },
+    {
+        title: 'PIFSS Deductions',
+        rows: [
+            {
+                label: 'Basic Insurance Salary',
+                value: summary.pifss.basicInsuranceSalary.toFixed(3)
+            },
+            {
+                label: 'Basic Insurance Contribution (5%)',
+                value: summary.pifss.basicContribution.toFixed(3),
+                negative: true
+            },
+            {
+                label: 'Supplementary Insurance Salary',
+                value: summary.pifss.supplementaryInsuranceSalary.toFixed(3)
+            },
+            {
+                label: 'Supplementary Contribution (5%)',
+                value: summary.pifss.supplementaryContribution.toFixed(3),
+                negative: true
+            },
+            {
+                label: 'Total PIFSS Deduction',
+                value: summary.pifss.total.toFixed(3),
+                negative: true,
+                highlightClass: 'final-highlightDecuctions'
+            }
+        ]
+    },
 
-        {
-            title: 'After PIFSS Deductions',
-            rows: [
-                {
-                    label: 'Gross Salary',
-                    value: summary.grossSalary.toFixed(3)
-                },
-                {
-                    label: 'PIFSS Deduction',
-                    value: summary.pifss.total.toFixed(3),
-                    negative: true
-                },
-                {
-                    label: 'Net Salary',
-                    value: summary.netSalary.toFixed(3),
-                    highlightClass: 'final-highlightAfterTax'
-                }
-            ]
-        }
-    ];
+    {
+        title: 'After PIFSS Deductions',
+        rows: [
+            {
+                label: 'Gross Salary',
+                value: summary.grossSalary.toFixed(3)
+            },
+            {
+                label: 'PIFSS Deduction',
+                value: summary.pifss.total.toFixed(3),
+                negative: true
+            },
+            {
+                label: 'Net Salary',
+                value: summary.netSalary.toFixed(3),
+                highlightClass: 'final-highlightAfterTax'
+            }
+        ]
+    }
+];
 
     const modifications = [
         ...(summary.housingCompensation > 0
@@ -179,28 +179,49 @@ export function displaySalarySummary(summary) {
                 id="salaryBreakdown"
                 style="display: none;"
             >
-                ${breakdownSections.map(section => `
-                    <div class="section-group">
+${breakdownSections.map(section => `
+    <div class="section-group">
 
-                        <h3 class="section-title">
-                            ${section.title}
-                        </h3>
+        <h3 class="section-title">
+            ${section.title}
+        </h3>
 
-                        ${section.rows.map(row => `
-                            <div class="summary-row ${row.highlightClass || ''}">
-                                <span style="white-space: nowrap;">
-                                    ${row.label}:
-                                </span>
+${section.rows.map(row => `
+    <div
+        class="summary-row ${row.highlightClass || ''}"
+        style="
+            display: block;
+            text-align: center;
+            white-space: normal;
+        "
+    >
+        <div
+            style="
+                color: inherit;
+                font-size: 0.85rem;
+                line-height: 1.4;
+            "
+        >
+            ${row.label}
+        </div>
 
-                                <strong>
-                                    ${row.positive ? '+ ' : row.negative ? '- ' : ''}
-                                    KWD&nbsp;${row.value}
-                                </strong>
-                            </div>
-                        `).join('')}
+        <div
+            style="
+                margin-top: var(--spacing-xs);
+                color: inherit;
+                font-size: 1rem;
+                font-weight: 600;
+                white-space: nowrap;
+            "
+        >
+            ${row.positive ? '+ ' : row.negative ? '- ' : ''}
+            KWD&nbsp;${row.value}
+        </div>
+    </div>
+`).join('')}
 
-                    </div>
-                `).join('')}
+    </div>
+`).join('')}
             </div>
         </div>
     `;
