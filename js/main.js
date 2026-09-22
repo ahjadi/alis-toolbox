@@ -29,10 +29,15 @@ this.textContent =
 
 if (isHidden) {
     setTimeout(() => {
-        advancedOptions.scrollIntoView({
-            behavior: 'smooth',
-            block: 'start'
-        });
+        const title =
+            document.getElementById('advancedOptionsTitle');
+
+        if (title) {
+            title.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }
     }, 100);
 }
         });

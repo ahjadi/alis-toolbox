@@ -98,7 +98,7 @@ body {
     padding: 0;
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
     min-height: 100vh;
     line-height: 1.5;
     -webkit-font-smoothing: antialiased;
@@ -172,6 +172,7 @@ nav ul li a.active {
     max-width: 700px;
 
     margin: calc(6rem + env(safe-area-inset-top)) auto 2rem;
+    transform: translateY(-20px);
 
 }
 
@@ -850,15 +851,24 @@ pre {
 
 .summary-row {
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    gap: var(--spacing-sm);
     margin: var(--spacing-sm) 0;
     font-size: 0.90rem;
     color: var(--text-secondary);
+}
+
+.summary-row > span {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
     white-space: nowrap;
 }
 
-.summary-row strong {
+.summary-row > strong {
+    flex: 0 0 auto;
+    white-space: nowrap;
     color: var(--text-primary);
     font-weight: 600;
 }
@@ -959,4 +969,25 @@ input[type="number"] {
 .section-arabic {
     margin-top: 3px;
     font-weight: 400;
+}
+
+.net-income-card {
+    text-align: center;
+    background-color: #e6f4ea;
+    padding: var(--spacing-md);
+    border-radius: var(--radius-md);
+    margin-bottom: var(--spacing-lg);
+    color: var(--success-color);
+}
+
+.net-income-label {
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.net-income-value {
+    font-size: 1.8rem;
+    font-weight: bold;
+    margin-top: var(--spacing-xs);
+    text-align: center;
 }
