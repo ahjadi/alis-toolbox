@@ -2,8 +2,11 @@
    CSS VARIABLES FOR EASY THEMING
    =========================== */
 :root {
+    --red-color: #b71725;
+    --green-color: #28a745;
+
     /* Color Palette A*/
-    /* --primary-color: #263667;
+    --primary-color: #263667;
     --primary-dark: #1c2a4f;
     --accent-color: #9c2427;
     --success-color: #28a745;
@@ -13,7 +16,7 @@
     --text-secondary: #838588;
     --text-light: #666;
     --border-color: #e0e0e0;
-    --border-dark: #888383; */
+    --border-dark: #888383;
 
     /* Color Palette B */
 /* --primary-color: #2563eb;
@@ -68,7 +71,7 @@
 --border-dark: #B7C5CF; */
 
 /* nice Color Palette F*/
---primary-color: #172B4D;
+/* --primary-color: #172B4D;
 --primary-dark: #0F1D35;
 --accent-color: #00A878;
 --success-color: #22B573;
@@ -78,7 +81,7 @@
 --text-secondary: #667085;
 --text-light: #98A2B3;
 --border-color: #E1E7E4;
---border-dark: #B8C5BF;
+--border-dark: #B8C5BF; */
 
 /* Color Palette G*/
 /* --primary-color: #4338CA;

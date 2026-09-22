@@ -151,7 +151,7 @@ const breakdownSections = [
                         <span>${row.label}:</span>
 
                         <strong ${row.redText
-                            ? 'style="color: var(--accent-color);"'
+                            ? 'style="color: var(--red-color);"'
                             : ''
                         }>
                             ${row.positive ? '+ ' : row.negative ? '- ' : ''}
