@@ -2,7 +2,7 @@
    CSS VARIABLES FOR EASY THEMING
    =========================== */
 :root {
-    /* Color Palette */
+    /* Color Palette A*/
     --primary-color: #263667;
     --primary-dark: #1c2a4f;
     --accent-color: #9c2427;
@@ -15,9 +15,47 @@
     --border-color: #e0e0e0;
     --border-dark: #888383;
 
-    /* Typography */
-    --font-primary: 'Dubai', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    /* Color Palette B */
+/* --primary-color: #2563eb;
+--primary-dark: #1d4ed8;
+--accent-color: #0f766e;
+--success-color: #16a34a;
+--background-light: #f8fafc;
+--background-white: #ffffff;
+--text-primary: #0f172a;
+--text-secondary: #64748b;
+--text-light: #94a3b8;
+--border-color: #e2e8f0;
+--border-dark: #cbd5e1; */
 
+/* Color Palette */
+/* --primary-color: #0071e3;
+--primary-dark: #005bb5;
+--accent-color: #ff3b30;
+--success-color: #34c759;
+--background-light: #f5f5f7;
+--background-white: #ffffff;
+--text-primary: #1d1d1f;
+--text-secondary: #6e6e73;
+--text-light: #86868b;
+--border-color: #d2d2d7;
+--border-dark: #a1a1a6; */
+
+/* Color Palette D*/
+/* --primary-color: #1e3a5f;
+--primary-dark: #152a45;
+--accent-color: #c2413b;
+--success-color: #2e9b62;
+--background-light: #f5f7fa;
+--background-white: #ffffff;
+--text-primary: #172033;
+--text-secondary: #667085;
+--text-light: #98a2b3;
+--border-color: #e4e7ec;
+--border-dark: #98a2b3; */
+    /* Typography */
+    /* --font-primary: 'Dubai', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; */
+--font-primary: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     /* Spacing */
     --spacing-xs: 0.25rem;
     --spacing-sm: 0.5rem;
@@ -41,45 +79,6 @@
     --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.1);
     --shadow-lg: 0 4px 12px rgba(0, 0, 0, 0.1);
     --shadow-hover: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-/* ===========================
-   FONT FACES
-   =========================== */
-@font-face {
-    font-family: 'Dubai';
-    src: url('./fonts/Dubai-Regular.woff2') format('woff2'),
-        url('./fonts/Dubai-Regular.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-    font-display: swap;
-}
-
-@font-face {
-    font-family: 'Dubai';
-    src: url('./fonts/Dubai-Bold.woff2') format('woff2'),
-        url('./fonts/Dubai-Bold.woff') format('woff');
-    font-weight: bold;
-    font-style: normal;
-    font-display: swap;
-}
-
-@font-face {
-    font-family: 'Dubai';
-    src: url('./fonts/Dubai-Light.woff2') format('woff2'),
-        url('./fonts/Dubai-Light.woff') format('woff');
-    font-weight: 300;
-    font-style: normal;
-    font-display: swap;
-}
-
-@font-face {
-    font-family: 'Dubai';
-    src: url('./fonts/Dubai-Medium.woff2') format('woff2'),
-        url('./fonts/Dubai-Medium.woff') format('woff');
-    font-weight: 500;
-    font-style: normal;
-    font-display: swap;
 }
 
 /* ===========================
@@ -431,75 +430,62 @@ pre {
 /* ===========================
    CHILDREN BUTTONS
    =========================== */
-/* Children Buttons Styles */
 .children-buttons {
     display: flex;
-    gap: 5px;
-    margin-bottom: 1rem;
-    flex-wrap: nowrap; /* Prevent wrapping on all screen sizes */
-    overflow-x: auto; /* Allow horizontal scrolling if needed */
-    -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+    gap: var(--spacing-xs);
+    margin-bottom: var(--spacing-md);
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
 }
 
 .child-button {
-    flex: 0 0 auto; /* Don't grow or shrink */
-    min-width: 40px; /* Minimum width for each button */
-    padding: 0.5rem 0.75rem;
+    flex: 0 0 auto;
+    min-width: 40px;
+    padding: var(--spacing-sm) var(--spacing-md);
     border: none;
-    border-radius: 5px;
-    background-color: #e0e0e0;
-    color: #333;
-    font-family: 'Dubai', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    border-radius: var(--radius-sm);
+    background-color: var(--border-color);
+    color: var(--text-primary);
+    font-family: var(--font-primary);
     font-size: 1rem;
     font-weight: 500;
     cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-    white-space: nowrap; /* Prevent text wrapping */
+    transition: background-color var(--transition-normal), transform var(--transition-fast);
+    white-space: nowrap;
 }
 
 .child-button:hover {
-    background-color: #d0d0d0;
+    background-color: var(--border-dark);
     transform: translateY(-2px);
 }
 
 .child-button[data-value="0"] {
-    background-color: #f0f0f0;
+    background-color: var(--background-light);
 }
 
 .child-button[data-value="1"] {
-    background-color: #e0e0e0;
+    background-color: var(--border-color);
 }
 
 .child-button[data-value="2"] {
-    background-color: #d0d0d0;
+    background-color: var(--border-dark);
 }
 
-.child-button[data-value="3"] {
-    background-color: #c0c0c0;
-}
-
-.child-button[data-value="4"] {
-    background-color: #b0b0b0;
-}
-
-.child-button[data-value="5"] {
-    background-color: #a0a0a0;
-}
-
-.child-button[data-value="6"] {
-    background-color: #909090;
-}
-
+.child-button[data-value="3"],
+.child-button[data-value="4"],
+.child-button[data-value="5"],
+.child-button[data-value="6"],
 .child-button[data-value="7"] {
-    background-color: #808080;
-    color: #fff;
+    background-color: var(--text-light);
+    color: var(--background-white);
 }
 
 .child-button.selected {
-    background-color: #263667;
-    color: #fff;
+    background-color: var(--primary-color);
+    color: var(--background-white);
     transform: translateY(-2px);
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: var(--shadow-hover);
 }
 
 /* ===========================
