@@ -158,14 +158,21 @@ nav ul li a.active {
    CONTAINER & LAYOUT
    =========================== */
 .container {
+
     background-color: var(--background-white);
+
     padding: var(--spacing-xl);
+
     border-radius: var(--radius-lg);
+
     box-shadow: var(--shadow-md);
+
     width: 100%;
-    max-width: 500px;
-    /* Adjust margin to account for nav height and safe area */
+
+    max-width: 700px;
+
     margin: calc(6rem + env(safe-area-inset-top)) auto 2rem;
+
 }
 
 /* ===========================
@@ -396,12 +403,21 @@ button:disabled {
    OUTPUT SECTIONS
    =========================== */
 .output {
+
     margin-top: var(--spacing-xl);
+
     padding: var(--spacing-lg);
+
     background-color: var(--background-light);
+
     border-radius: var(--radius-sm);
+
     border: 2px solid var(--border-dark);
+
     animation: fadeIn 0.3s ease-in;
+
+    width: 100%;
+
 }
 
 @keyframes fadeIn {
@@ -785,16 +801,29 @@ pre {
 }
 
 .summary-card {
+
     background: var(--background-white);
+
     border: 1px solid var(--border-color);
+
     border-radius: var(--radius-lg);
+
     padding: var(--spacing-lg);
-    max-width: 600px;
+
+    width: 100%;
+
+    max-width: none;
+
     margin: var(--spacing-xl) auto;
+
     box-shadow: var(--shadow-md);
+
     font-family: var(--font-primary);
+
     transition: var(--transition-normal);
+
     font-size: 15px;
+
 }
 
 .summary-title {

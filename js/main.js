@@ -19,13 +19,22 @@ document.addEventListener('DOMContentLoaded', function () {
             const isHidden =
                 getComputedStyle(advancedOptions).display === 'none';
 
-            advancedOptions.style.display =
-                isHidden ? 'block' : 'none';
+advancedOptions.style.display =
+    isHidden ? 'block' : 'none';
 
-            this.textContent =
-                isHidden
-                    ? 'Hide Advanced Options'
-                    : 'Show Advanced Options';
+this.textContent =
+    isHidden
+        ? 'Hide Advanced Options'
+        : 'Show Advanced Options';
+
+if (isHidden) {
+    setTimeout(() => {
+        advancedOptions.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+        });
+    }, 100);
+}
         });
     }
 
