@@ -15,20 +15,16 @@ const breakdownSections = [
         title: 'Before PIFSS Deductions',
         rows: [
             {
-                label: 'Base Salary',
+                label: 'Basic Salary',
                 value: summary.baseSalary.toFixed(3)
             },
             {
-                label: 'PIFSS Basic-Insurable WFS',
-                value: summary.wfs.pifssInsurable.toFixed(3)
-            },
-            {
-                label: 'Other WFS Allowance',
-                value: summary.wfs.nonPifss.toFixed(3)
-            },
-            {
-                label: 'Total WFS Allowance',
+                label: 'WFS Allowance',
                 value: summary.wfs.total.toFixed(3)
+            },
+            {
+                label: 'PIFSS-Insurable WFS',
+                value: summary.wfs.pifssInsurable.toFixed(3)
             },
             {
                 label: 'Gross Salary',
@@ -45,20 +41,12 @@ const breakdownSections = [
                 label: 'Basic Insurance Salary',
                 value: summary.pifss.basicInsuranceSalary.toFixed(3)
             },
-            {
-                label: 'Basic Insurance Contribution (5%)',
-                value: summary.pifss.basicContribution.toFixed(3),
-                negative: true
-            },
+
             {
                 label: 'Supplementary Insurance Salary',
                 value: summary.pifss.supplementaryInsuranceSalary.toFixed(3)
             },
-            {
-                label: 'Supplementary Contribution (5%)',
-                value: summary.pifss.supplementaryContribution.toFixed(3),
-                negative: true
-            },
+            
             {
                 label: 'Total PIFSS Deduction',
                 value: summary.pifss.total.toFixed(3),
@@ -122,7 +110,7 @@ const breakdownSections = [
 
             <div class="net-income-card">
                 <div class="net-income-label">
-                    NET INCOME
+                    Net Income
                 </div>
 
                 <div class="net-income-value">
@@ -150,10 +138,12 @@ const breakdownSections = [
                     <div class="summary-row">
                         <span>${row.label}:</span>
 
-                        <strong ${row.redText
-                            ? 'style="color: var(--red-color);"'
-                            : ''
-                        }>
+<strong ${row.redText
+    ? 'style="color: var(--red-color);"'
+    : row.positive
+        ? 'style="color: var(--green-color);"'
+        : ''
+}>
                             ${row.positive ? '+ ' : row.negative ? '- ' : ''}
                             KWD&nbsp;${row.value}
                         </strong>
