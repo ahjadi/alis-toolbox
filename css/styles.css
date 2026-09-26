@@ -6,7 +6,7 @@
     --green-color: #28a745;
 
     /* Color Palette A*/
-    --primary-color: #263667;
+    /* --primary-color: #263667;
     --primary-dark: #1c2a4f;
     --accent-color: #9c2427;
     --success-color: #28a745;
@@ -16,7 +16,7 @@
     --text-secondary: #838588;
     --text-light: #666;
     --border-color: #e0e0e0;
-    --border-dark: #888383;
+    --border-dark: #888383; */
 
     /* Color Palette B */
 /* --primary-color: #2563eb;
@@ -58,7 +58,7 @@
 --border-dark: #98a2b3; */
 
 /* Color Palette E*/
-/* --primary-color: #173F5F;
+--primary-color: #173F5F;
 --primary-dark: #102E45;
 --accent-color: #00A6A6;
 --success-color: #2BB673;
@@ -68,7 +68,7 @@
 --text-secondary: #657786;
 --text-light: #9AA9B5;
 --border-color: #DCE4EA;
---border-dark: #B7C5CF; */
+--border-dark: #B7C5CF;
 
 /* nice Color Palette F*/
 /* --primary-color: #172B4D;
